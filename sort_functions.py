@@ -187,7 +187,11 @@ def insertion_sort(l: list, trace: bool = True, online: bool = False) -> None:
 
 def quick_sort(l: list, trace: bool = True) -> None:
     """
+    Call helper function to hide left and right parameters.
+    See quick_sort_helper documentation for algorithm details.
     """
+
+    quick_sort_helper(l, 0, len(l))
     
 
 def quick_sort_helper(l: list, left: int, right: int) -> None:
@@ -198,11 +202,15 @@ def quick_sort_helper(l: list, left: int, right: int) -> None:
     Best:     O(n*logn) comparisons, O(n*logn) swaps
     Average:  O(n*logn) comparisons, O(n*logn) swaps
     Worst:    O(n**2) comparisons, O(n**2) swaps
-    Memory:
-        Best:    O(logn)
-        Average: O(logn)
-        Worst:   O(n)
-    
+    Memory:   Best: O(logn), Worst: O(n)
+    Best:     O(logn)
+    Average:  O(logn)
+    Worst:    O(n**2)
+    Stable:   No
+    Online:   No
+    Adaptive: No
+    Parallel: Yes
+    Method:   Exchange
     """
     if left < right:
         pivot_loc = partition(l, left, right)
