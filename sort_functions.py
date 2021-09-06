@@ -190,8 +190,10 @@ def quick_sort(l: list, trace: bool = True) -> None:
     Call helper function to hide left and right parameters.
     See quick_sort_helper documentation for algorithm details.
     """
-
     quick_sort_helper(l, 0, len(l) - 1)
+
+    if trace:
+        print(l)
     
 
 def quick_sort_helper(l: list, left: int, right: int) -> None:
@@ -203,14 +205,15 @@ def quick_sort_helper(l: list, left: int, right: int) -> None:
     Average:  O(n*logn) comparisons, O(n*logn) swaps
     Worst:    O(n**2) comparisons, O(n**2) swaps
     Memory:   Best: O(logn), Worst: O(n)
-    Best:     O(logn)
-    Average:  O(logn)
-    Worst:    O(n**2)
     Stable:   No
     Online:   No
     Adaptive: No
     Parallel: Yes
     Method:   Exchange
+    Notes:    Well implemented quicksort can be faster than mergesort or heapsort
+              on average. Most implementation switch to a bubble or insertion
+              sort after a specific size of list is attained because the overhead
+              of quicksort damages performance on smaller lists.
     """
     if left < right:
         pivot_loc = partition(l, left, right)
@@ -245,7 +248,76 @@ def partition(l: list, left: int, right: int) -> int:
     swap(l, boundary, right)
     return boundary
 
+def merge_sort(l: list, trace: bool = True) -> None:
 
+    # Initialize space needed to perform merges
+    copy_buffer = [None]*len(l)
+    merge_sort_helper(l, copy_buffer, 0, len(l) - 1)
+
+    if trace:
+        print(l)
+
+def merge_sort_helper(l: list, copy_buffer: list, left: int, right: int) -> None:
+    """
+    Partition current list and recursively call quicksort to partition
+    sublists to left and right of the pivot.
+
+    Best:     O(n*logn) comparisons, O(n*logn) assignments
+    Average:  O(n*logn) comparisons, O(n*logn) assignments
+    Worst:    O(n*logn) comparisons, O(n*logn) assignments
+    Memory:   O(n) # not dominated by O(logn) stack space so no worst/avg case
+    Stable:   Yes
+    Online:   No
+    Adaptive: Some implementations
+    Parallel: Yes
+    Method:   Merge
+    Notes:    There are three versions: top down, bottom up, and natural. The
+              third is an optimization that is adaptive. Most implementations
+              switch to a bubble or insertion sort after a specific size of list
+              is attained because the overhead of mergesort damages performance
+              on smaller lists.
+    """
+    if left < right:
+        mid = (left + right) // 2
+        merge_sort_helper(l, copy_buffer, left, mid)
+        merge_sort_helper(l, copy_buffer, mid + 1, right)
+        merge(l, copy_buffer, left, mid, right)
+
+def merge(l: list, copy_buffer: list, left: int,
+          mid: int, right: int, trace: bool = False) -> None:
+    """
+    Merge two sorted sublists into a single sorted sublist and copy it back over
+    its positions in the input list.
+
+    Best:     O(n) comparisons, O(n) assignments
+    Average:  O(n) comparisons, O(n) assignments
+    Worst:    O(n) comparisons, O(n) assignments
+    Memory:   O(1)
+    """
+
+    if trace:
+        print(f"Pre-merge list: {l}")
+        print(f"left: {left}, mid: {mid}, right: {right})")
+    i1 = left
+    i2 = mid + 1
+    for i in range(left, right + 1):
+        if i1 > mid: # First sublist exhausted
+            copy_buffer[i] = l[i2]
+            i2 += 1
+        elif i2 > right: # Second sublist exhausted
+            copy_buffer[i] = l[i1]
+            i1 += 1
+        elif l[i1] < l[i2]: # Item in first sublist <
+            copy_buffer[i] = l[i1]
+            i1 += 1
+        else: # Item in second sublist <
+            copy_buffer[i] = l[i2]
+            i2 += 1
+    for i in range(left, right + 1):
+        l[i] = copy_buffer[i]
+        
+    if trace:
+        print(f"Post-merge list: {l}\n")
     
         
 if __name__ == "__main__":
