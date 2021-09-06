@@ -191,7 +191,7 @@ def quick_sort(l: list, trace: bool = True) -> None:
     See quick_sort_helper documentation for algorithm details.
     """
 
-    quick_sort_helper(l, 0, len(l))
+    quick_sort_helper(l, 0, len(l) - 1)
     
 
 def quick_sort_helper(l: list, left: int, right: int) -> None:
@@ -244,6 +244,8 @@ def partition(l: list, left: int, right: int) -> int:
     # Put pivot back in the middle
     swap(l, boundary, right)
     return boundary
+
+
     
         
 if __name__ == "__main__":
