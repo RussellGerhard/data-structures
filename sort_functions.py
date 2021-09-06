@@ -1,5 +1,7 @@
 """
 CHANGED DOCSTRING COMMENT
+
+THIS ONE IS DIFFERENT MUAHLALA
 This module implements several basic sorting algorithms.
 
 There are five general classes of comparison sorting algorithms:
