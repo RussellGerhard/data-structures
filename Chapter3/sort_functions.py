@@ -217,8 +217,8 @@ def quick_sort_helper(l: list, left: int, right: int) -> None:
     """
     if left < right:
         pivot_loc = partition(l, left, right)
-        quick_sort_helper(l, pivot_loc + 1, right)
         quick_sort_helper(l, left, pivot_loc - 1)
+        quick_sort_helper(l, pivot_loc + 1, right)
 
 def partition(l: list, left: int, right: int) -> int:
     """
