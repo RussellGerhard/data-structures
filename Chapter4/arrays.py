@@ -21,6 +21,21 @@ class Array:
         for _ in range(capacity):
             self.items.append(deepcopy(fill_value))
 
+    def __eq__(self, other):
+        """Return True if other is an array of same logical size and contents."""
+        if type(other) != type(self):
+            return False
+        elif other.size() != self.size():
+            return False
+        else:
+            i = 0
+            while i < self.size():
+                if self.items[i] != other.items[i]:
+                    return False
+                i += 1
+            return True
+            
+            
     def __getitem__(self, index):
         """Get item at index in array."""
         if index < 0 or index >= self.size():
@@ -29,7 +44,7 @@ class Array:
 
     def __iter__(self):
         """Support traversal with for loop."""
-        return iter(self.items)
+        return iter(self.items[:self.size()])
     
     def __len__(self):
         """Get capacity of array."""
@@ -37,7 +52,7 @@ class Array:
 
     def __repr__(self):
         """Get representation of the array object."""
-        return repr(self.items)
+        return repr(self.items[:self.size()])
 
     def __setitem__(self, index, value):
         """Set value at index in array."""
@@ -47,7 +62,8 @@ class Array:
 
     def __str__(self):
         """Get string representation of the array object."""
-        return str(self.items)
+        return str(self.items[:self.size()])
+        
 
     def grow(self):
         """Double size of array."""
@@ -97,12 +113,6 @@ class Array:
             self.logical_size -= 1
             self.shrink()
             return out
-
-    def remove(self, index):
-        """Set item at index to default value."""
-        if index < 0 or index >= self.size():
-            raise IndexError("array index out of range")
-        self.items[index] = self.fill_value
 
     def shrink(self):
         """Halve size of array."""

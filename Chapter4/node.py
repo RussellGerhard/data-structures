@@ -15,7 +15,7 @@ class Node:
     def __repr__(self):
         return f"{self.data}"
 
-class TwoWayNode:
+class TwoWayNode(Node):
     """Represent a doubly-linked node."""
     def __init__(self, data, _next = None, prev = None):
         Node.__init__(self, data, _next)
@@ -37,6 +37,15 @@ class LinkedList:
             return probe
         else:
             raise IndexError("LinkedList index out of range")
+        
+    def __repr__(self):
+        """Get representation of the linked list."""
+        out = ''
+        probe = self.head
+        while probe != None:
+            out += f"{probe.data} "
+            probe = probe.next
+        return out
 
     def __setitem__(self, index, value):
         probe = self.head
@@ -47,14 +56,15 @@ class LinkedList:
             probe.data = value
         else:
             raise IndexError("LinkedList index out of range")
-
-    def push(self, item):
-        self.prepend(item)
-
-    def prepend(self, item):
-        """Prepend an item to the list."""
-        self.head = Node(item, self.head)
-        self.length += 1
+            
+    def __str__(self):
+        """Get string representation of the linked list."""
+        out = ''
+        probe = self.head
+        while probe != None:
+            out += f"{probe.data} "
+            probe = probe.next
+        return out
 
     def append(self, item):
         """Append an item to the end of the list, O(n) time."""
@@ -69,6 +79,11 @@ class LinkedList:
 
         self.length += 1
 
+    def clear(self):
+        """Clear list."""
+        self.head = None
+        self.length = 0
+
     def copy(self):
         """Make a copy of the list."""
         copy = LinkedList()
@@ -77,11 +92,6 @@ class LinkedList:
             copy.append(probe)
             probe = probe.next
         return copy
-
-    def clear(self):
-        """Clear list."""
-        self.head = None
-        self.length = 0
 
     def count(self, item):
         """Count number of instances of item in list."""
@@ -92,6 +102,13 @@ class LinkedList:
                 count += 1
             probe = probe.next
         return count
+
+    def disp(self):
+        """Display like a stack."""
+        probe = self.head
+        while probe != None:
+            print(probe)
+            probe = probe.next
 
     def extend(self, iterable):
         """Extend list by appending items in iterable."""
@@ -139,24 +156,6 @@ class LinkedList:
             probe.next = Node(item, probe.next)
             self.length += 1
 
-    def remove(self, item):
-        """Remove first occurence of value."""
-        probe = self.head
-        if probe == None: # List is empty
-            raise ValueError("LinkedList.remove(x): x not in list")
-        else:
-            if probe.data == item: # Remove from beginning
-                self.head = probe.next
-                self.length -= 1
-            else:
-                while probe.next != None and probe.next.data != item:
-                    probe = probe.next
-                if probe.next == None:
-                    raise ValueError("LinkedList.remove(x): x not in list")
-                else:
-                    probe.next = probe.next.next
-                    self.length -= 1
-
     def pop(self, index = 0):
         """Remove and return item at index."""
         if self.head == None:
@@ -186,6 +185,32 @@ class LinkedList:
                 probe.next = probe.next.next
                 self.length -= 1
                 return out
+
+    def prepend(self, item):
+        """Prepend an item to the list."""
+        self.head = Node(item, self.head)
+        self.length += 1
+
+    def push(self, item):
+        self.prepend(item)
+
+    def remove(self, item):
+        """Remove first occurence of value."""
+        probe = self.head
+        if probe == None: # List is empty
+            raise ValueError("LinkedList.remove(x): x not in list")
+        else:
+            if probe.data == item: # Remove from beginning
+                self.head = probe.next
+                self.length -= 1
+            else:
+                while probe.next != None and probe.next.data != item:
+                    probe = probe.next
+                if probe.next == None:
+                    raise ValueError("LinkedList.remove(x): x not in list")
+                else:
+                    probe.next = probe.next.next
+                    self.length -= 1
 
     def reverse(self):
         """Reverse *IN PLACE*."""
@@ -277,28 +302,14 @@ class LinkedList:
             self[i] = copy_buffer[i].data
         """
 
-    def disp(self):
-        """Display like a stack."""
-        probe = self.head
-        while probe != None:
-            print(probe)
+def make_two_way(l: LinkedList) -> LinkedList:
+    if l.head == None:
+        l.tail = l.head
+    else:
+        probe = TwoWayNode(l.head.data, l.head.next, None)
+        while probe.next != None:
+            temp = probe
             probe = probe.next
-            
-    def __str__(self):
-        """Get string representation of the linked list."""
-        out = ''
-        probe = self.head
-        while probe != None:
-            out += f"{probe.data} "
-            probe = probe.next
-        return out
-
-    def __repr__(self):
-        """Get representation of the linked list."""
-        out = ''
-        probe = self.head
-        while probe != None:
-            out += f"{probe.data} "
-            probe = probe.next
-        return out
+            probe = TwoWayNode(probe, probe.next, temp)
+        l.tail = probe
     
