@@ -1,5 +1,5 @@
 """
-This module implements several basic sorting algorithms.
+Implement several basic sorting algorithms.
 
 There are five general classes of comparison sorting algorithms:
 Selection: selection sort and heapsort
@@ -313,6 +313,7 @@ def merge(l: list, copy_buffer: list, left: int,
         else: # Item in second sublist <
             copy_buffer[i] = l[i2]
             i2 += 1
+            
     for i in range(left, right + 1):
         l[i] = copy_buffer[i]
         
