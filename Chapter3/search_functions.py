@@ -1,4 +1,7 @@
-"""This module implements several basic searching algorithms."""
+"""
+Author: Russell Gerhard
+This module implements several basic searching algorithms.
+"""
 
 def find_minimum(numbers: list) -> int:
     """

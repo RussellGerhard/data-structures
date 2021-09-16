@@ -1,4 +1,5 @@
 """
+Author: Russell Gerhard
 Implement a simple node class.
 """
 

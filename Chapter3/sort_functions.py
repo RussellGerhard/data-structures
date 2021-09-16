@@ -1,4 +1,5 @@
 """
+Author: Russell Gerhard
 Implement several basic sorting algorithms.
 
 There are five general classes of comparison sorting algorithms:

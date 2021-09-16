@@ -1,5 +1,7 @@
 from copy import deepcopy
+
 """
+Author: Russell Gerhard
 Implement a basic array object.
 """
 
