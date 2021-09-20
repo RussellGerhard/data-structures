@@ -1,11 +1,12 @@
 from arrays import Array
+from abstractbag import AbstractBag
 
 """
 Author: Russell Gerhard
 Implement bag ADT using an array as the underlying data structure.
 """
 
-class ArrayBag(object):
+class ArrayBag(AbstractBag):
     """
     Implement bag ADT using an array.
 
@@ -48,62 +49,21 @@ class ArrayBag(object):
 
     def __init__(self, source_collection = None):
         """Initialize self, optionally including items in source_collection."""
-        self.clear()
+        self.items = Array(ArrayBag.default_capacity)
+        self.position = -1
+        AbstractBag.__init__(self, source_collection)
 
-        if source_collection:
-            for item in source_collection:
-                self.add(item)
-
-    # Accessors
-    def __add__(self, other):
-        """
-        Return a bag that contains contents of self and other.
-        Precondition: other must be of type bag.
-        Raises: TypeError if other is not a bag.
-        """
-        # Check precondition
-        if type(other) != type(self):
-            raise TypeError("can only concatenate bag (not )}) to bag")
-        # Create new bag
-        out = ArrayBag(self)
-        for item in other:
-            out.add(item)
-        return out
-
-    def clone(self):
-        """Return copy of self."""
-        return ArrayBag(self)
-
-    def count(self, item):
-        """Return number of instances of item in self."""
-        count = 0
+    def __contains__(self, item):
+        """Return True if item in self, set self.position to index. Else return False."""
         for obj in self:
-            if obj == item:
-                count += 1
-        return count
-    
-    def __eq__(self, other):
-        """
-        Determine if self is equal to other.
-        Return True if self and other of same type and contain same items.
-        Return False else.
-        """
-        if self is other:
-            return True
-        elif type(self) != type(other):
-            return False
-        elif len(self) != len(other):
-            return False
-        else:
-            for item in self:
-                if self.count(item) != other.count(item):
-                    return False
-            return True
+            self.position += 1
+            if item == obj:
+                return True
+        # Did not find item
+        self.position = -1
+        return False
         
-    def is_empty(self):
-        """Determine if self is empty, return True if it is, else False."""
-        return (len(self) == 0)
-
+    # Accessors
     def __iter__(self):
         """Support iteration over the object to visit each item."""
         mod_count = self.mod_count
@@ -115,23 +75,12 @@ class ArrayBag(object):
                 raise RuntimeError("Cannot modify object during iteration.""")
             i += 1
 
-    def __len__(self):
-        """Return the number of items in self."""
-        return self.size
-
-    def __repr__(self):
-        """Return the representation of self."""
-        return str(self)
-
-    def __str__(self):
-        """Return the string representation of self."""
-        return '{' + ", ".join(map(str, self)) + '}' 
-
     # Mutators
     def clear(self):
         """Empty self and reset size to 0."""
         self.size = 0
         self.mod_count = 0
+        self.position = -1
         self.items = Array(ArrayBag.default_capacity)
 
     def add(self, item):
@@ -147,47 +96,27 @@ class ArrayBag(object):
         Raises: ValueError if item is not in self.
         Postcondition: Item is not in self.
         """
-        # Check precondition
+        # Reset position and check precondition
+        self.position = -1
         if item not in self:
             raise ValueError("ArrayBag.remove(x): x not in ArrayBag")
 
-        # Search for index of target item
-        target_index = 0
-        for obj in self:
-            if obj == item:
-                break
-            target_index += 1
-            
-         # Remove target item
-        self.items.pop(target_index)
+##        # __contains__ sets position if item in self; search loop not needed.
+##        # Search for index of target item
+##        target_index = self.position
+##        for obj in self:
+##            if obj == item:
+##                break
+##            target_index += 1
+        
+        # Remove target item
+        self.items.pop(self.position)
 
         # Decrement logical size and increase mod_count
         self.size -= 1
         self.mod_count += 1
 
-class ArraySet(ArrayBag):
-
-    # This is superfluous because python calls super.__init__() if __init__ is
-    # missing from the subclass.
-    def __init__(self, source_collection = None):
-        """Initialize self, optionally including items in source_collection."""
-        ArrayBag.__init__(self, source_collection)
-    
-    def add(self, item):
-        """
-        Add item to self if not already in self.
-        Increase size if add performed, increase capacity as needed.
-        Item must be comparable, else raises ValueError.
-        Precondition: self is sorted.
-        Postcondition: self is sorted.
-        """
-        if item not in self:
-            self.items.insert(len(self), item)
-            self.size += 1
-            self.mod_count += 1
-
 class ArraySortedBag(ArrayBag):
-
     # This is superfluous because python calls super.__init__() if __init__ is
     # missing from the subclass.
     def __init__(self, source_collection = None):
@@ -211,7 +140,9 @@ class ArraySortedBag(ArrayBag):
             elif item > self.items[mid]:
                 left = mid + 1
             else:
+                self.position = mid
                 return True
+            
         return False
 
     def __eq__(self, other):
@@ -235,8 +166,11 @@ class ArraySortedBag(ArrayBag):
     # Mutators  
     def add(self, item):
         """
-        Add item to self in proper sorted order.
-        Increase size, increase capacity as needed.
+        Add item to self if not already in self.
+        Increase size if add performed, increase capacity as needed.
+        Item must be comparable, else raises ValueError.
+        Precondition: self is sorted.
+        Postcondition: self is sorted.
         """
         
         # Binary search for index position
@@ -254,15 +188,50 @@ class ArraySortedBag(ArrayBag):
                 break
 
         # Insert in correct position
-        if mid == 0 and len(self) == 0:
+        if self.is_empty():
             self.items.insert(0, item)
         elif item > self.items[mid]:
             self.items.insert(mid + 1, item)
         else:
             self.items.insert(mid, item)
+            
         self.size += 1
         self.mod_count += 1
-            
+
+class ArraySet(ArrayBag):
+    # This is superfluous because python calls super.__init__() if __init__ is
+    # missing from the subclass.
+    def __init__(self, source_collection = None):
+        """Initialize self, optionally including items in source_collection."""
+        ArrayBag.__init__(self, source_collection)
+    
+    def add(self, item):
+        """
+        Add item to self in proper sorted order.
+        Increase size, increase capacity as needed.
+        """
+        if item not in self:
+            self.items.insert(len(self), item)
+            self.size += 1
+            self.mod_count += 1
+
+class ArraySortedSet(ArraySortedBag):
+    def __init__(self, source_collection = None):
+        """Initialize self, optionally including items in source_collection."""
+        ArraySortedBag.__init__(self, source_collection)
+
+    def add(self, item):
+        """
+        Add item to self if not already in self.
+        Increase size if add performed, increase capacity as needed.
+        Item must be comparable, else raises ValueError.
+        Precondition: self is sorted.
+        Postcondition: self is sorted.
+        """
+        if item not in self:
+            ArraySortedBag.add(self, item)
+
+        
 if __name__ == "__main__":
     import doctest
     doctest.testmod()

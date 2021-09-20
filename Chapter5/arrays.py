@@ -134,9 +134,4 @@ class Array:
         return self.logical_size
 
 if __name__ == "__main__":
-    a = Array(2)
-    a.insert(0, 10)
-    a.insert(1, 20)
-    a.insert(2, 30)
-    a.insert(3, 40)
-    a.insert(4, 50)
+    pass

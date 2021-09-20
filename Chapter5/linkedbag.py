@@ -92,9 +92,9 @@ class LinkedBag(object):
         """
         if self is other:
             return True
-        elif len(self) != len(other):
-            return False
         elif type(self) != type(other):
+            return False
+        elif len(self) != len(other):
             return False
         else:
             for item in self:

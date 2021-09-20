@@ -19,6 +19,10 @@ class BagInterface:
         """
         return None
 
+    def clone(self):
+        """Return copy of self."""
+        return None
+
     def count(self, item):
         """Returns the number of instances of item in self."""
         return 0
@@ -41,6 +45,10 @@ class BagInterface:
 
     def __str__(self):
         """Return the string representation of self."""
+        return ''
+
+    def __repr__(self):
+        """Return unique representation of self."""
         return ''
 
     # Mutator Methods

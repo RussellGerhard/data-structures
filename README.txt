@@ -1,0 +1,1 @@
+The arrays.py and node.py files are the same in Chapters 4-6. The bag_test.py file is the same in Chapters 5 and 6, however, the arraybag.py and linkedbag.py files are NOT the same in Chapters 5 and 6. In Chapter 5 they are fully implemented on their own, whereas in Chapter 6 they are factored and depend on the abstractbag.py and abstractcollection.py modules.
