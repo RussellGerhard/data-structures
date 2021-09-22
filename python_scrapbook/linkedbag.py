@@ -1,50 +1,16 @@
-from arrays import Array
-from node import LinkedList, Node
+from linkedlist import LinkedList
+
+## THIS IS A LEARNING FILE NOT INTENDED FOR EXPORT ##
+## THIS FILE WILL NOT WORK WITHOUT A COPY OF linkedbag.py IN LOCAL DIRECTORY ##
 
 """
-Author: Russell Gerhard
-Implement bag ADT using a linked list as the underlying data structure.
+Author:  Russell Gerhard
+Purpose: Implement bag ADT, without inheritance, using a linked list
+         as the underlying data structure.
 """
 
 class LinkedBag(object):
-    """
-    Implement bag ADT using a linked list.
-
-    >>> b = LinkedBag()
-    >>> b.is_empty()
-    True
-    >>> b.add(10)
-    >>> b.is_empty()
-    False
-    >>> len(b)
-    1
-    >>> b.add('a')
-    >>> len(b)
-    2
-    >>> b.clear()
-    >>> b.is_empty()
-    True
-    >>> len(b)
-    0
-    >>> b.add(1)
-    >>> b.add('a')
-    >>> 1 in b
-    True
-    >>> 'c' in b
-    False
-    >>> a = LinkedBag([2,3,4])
-    >>> b = a + b
-    >>> 4 in b
-    True
-    >>> a.remove(2)
-    >>> 2 in a
-    False
-    >>> a.count(3)
-    1
-    >>> c = LinkedBag([3,4])
-    >>> a == c
-    True
-    """
+    """Implement bag ADT using a linked list."""
     default_capacity = 10
 
     def __init__(self, source_collection = None):
@@ -132,7 +98,7 @@ class LinkedBag(object):
         self.items = LinkedList()
 
     def add(self, item):
-        """Add item to self, increase size of underlying array if necessary."""
+        """Add item to self."""
         self.items.insert(0, item)
         self.size += 1
 
@@ -162,7 +128,3 @@ class LinkedSet(LinkedBag):
         if item not in self:
             self.items.insert(0, item)
             self.size += 1
-        
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod()

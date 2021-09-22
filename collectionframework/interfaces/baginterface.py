@@ -1,6 +1,6 @@
 """
 Author: Russell Gerhard
-Lay blueprint (interface) for class implementing bag ADT.
+Lay blueprint (interface) for any class implementing bag ADT.
 """
 
 class BagInterface:
@@ -36,19 +36,19 @@ class BagInterface:
         return True
 
     def __iter__(self):
-        """Support iteration over all itmes in self."""
+        """Support iteration over all items in self."""
         return None
 
     def __len__(self):
         """Return the number of items in self."""
         return 0
 
-    def __str__(self):
-        """Return the string representation of self."""
-        return ''
-
     def __repr__(self):
         """Return unique representation of self."""
+        return ''
+
+    def __str__(self):
+        """Return the string representation of self."""
         return ''
 
     # Mutator Methods

@@ -1,8 +1,11 @@
 from copy import deepcopy
 
 """
-Author: Russell Gerhard
-Implement a basic array object.
+Author:  Russell Gerhard
+Purpose: Implement a basic array object.
+
+Exports:
+    Array: Array that mimics functionality of explicity-memory-allocated arrays.
 """
 
 class Array:
@@ -12,9 +15,7 @@ class Array:
     def __init__(self, capacity = 10, fill_value = None):
         """
         Initialize array and fill each position with fill_value.
-
-        deepcopy fill_value because, if it's mutable, each row in self.items
-        will points to the same column object.
+        deepcopy fill_value in case its mutable.
         """
         self.items = []
         self.logical_size = 0
@@ -24,9 +25,12 @@ class Array:
         for _ in range(capacity):
             self.items.append(deepcopy(fill_value))
 
+    # Accessors
     def __eq__(self, other):
         """Return True if other is an array of same logical size and contents."""
-        if type(other) != type(self):
+        if self is other:
+            return True
+        elif type(other) != type(self):
             return False
         elif other.size() != self.size():
             return False
@@ -38,9 +42,12 @@ class Array:
                 i += 1
             return True
             
-            
     def __getitem__(self, index):
-        """Get item at index in array."""
+        """
+        Return item at index in array.
+        Precondition: Index in range(0, self.size())
+        Raises: IndexError
+        """
         if index < 0 or index >= self.size():
             raise IndexError("array index out of range")
         return self.items[index]
@@ -57,19 +64,17 @@ class Array:
         """Get representation of the array object."""
         return repr(self.items[:self.size()])
 
-    def __setitem__(self, index, value):
-        """Set value at index in array."""
-        if index < 0 or index >= self.size():
-            raise IndexError("array index out of range")
-        self.items[index] = value
+    def size(self):
+        """Get logical size of array."""
+        return self.logical_size
 
     def __str__(self):
         """Get string representation of the array object."""
         return str(self.items[:self.size()])
         
-
+    # Mutators
     def grow(self):
-        """Double size of array."""
+        """Double capacity of array if logical size equals capacity."""
         if self.size() == len(self):
             # Double physical size
             temp = Array(len(self)*2)
@@ -81,7 +86,11 @@ class Array:
             self.items = temp.items
 
     def insert(self, index, item):
-        """Insert item in self before index position."""
+        """
+        Insert item in self before index position.
+        Precondition: Index is nonnegative.
+        Raises: IndexError
+        """
         if index < 0:
             raise IndexError("array index must be nonnegative")
         else:
@@ -102,7 +111,11 @@ class Array:
             self.logical_size += 1
 
     def pop(self, index):
-        """Take item at index in array out of the array and return it."""
+        """
+        Take item at index in array out of the array and return it.
+        Precondition: Index in range(0, self.size())
+        Raises: IndexError
+        """
         if index < 0 or index >= self.size():
             raise IndexError("array index out of range")
         else:
@@ -116,9 +129,22 @@ class Array:
             self.logical_size -= 1
             self.shrink()
             return out
+        
+    def __setitem__(self, index, value):
+        """
+        Set value at index in array.
+        Precondition: Index in range(0, self.size())
+        Raises: IndexError
+        """
+        if index < 0 or index >= self.size():
+            raise IndexError("array index out of range")
+        self.items[index] = value
 
     def shrink(self):
-        """Halve size of array."""
+        """
+        Halve capacity of array if logical size is less than or equal to a fourth of capacity
+        and capacity is twice the default capacity.
+        """
         if self.size() <= (len(self) // 4) and len(self) >= (2 * self.default_capacity):
             # Halve physical size
             temp = Array(len(self) // 2)
@@ -128,10 +154,3 @@ class Array:
             for i in range(self.size()):
                 temp.items[i] = self.items[i]
             self.items = temp.items
-
-    def size(self):
-        """Get logical size of array."""
-        return self.logical_size
-
-if __name__ == "__main__":
-    pass

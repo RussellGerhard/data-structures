@@ -1,49 +1,16 @@
-from arrays import Array
+from array import Array
+
+## THIS IS A LEARNING FILE NOT INTENDED FOR EXPORT ##
+## THIS FILE WILL NOT WORK WITHOUT A COPY OF array.py IN LOCAL DIRECTORY ##
 
 """
-Author: Russell Gerhard
-Implement bag ADT using an array as the underlying data structure.
+Author:  Russell Gerhard
+Purpose: Fully implement bag ADT, without inheritance, using an array
+         as the underlying data structure.
 """
 
 class ArrayBag(object):
-    """
-    Implement bag ADT using an array.
-
-    >>> b = ArrayBag()
-    >>> b.is_empty()
-    True
-    >>> b.add(10)
-    >>> b.is_empty()
-    False
-    >>> len(b)
-    1
-    >>> b.add('a')
-    >>> len(b)
-    2
-    >>> b.clear()
-    >>> b.is_empty()
-    True
-    >>> len(b)
-    0
-    >>> b.add(1)
-    >>> b.add('a')
-    >>> 1 in b
-    True
-    >>> 'c' in b
-    False
-    >>> a = ArrayBag([2,3,4])
-    >>> b = a + b
-    >>> 4 in b
-    True
-    >>> a.remove(2)
-    >>> 2 in a
-    False
-    >>> a.count(3)
-    1
-    >>> c = ArrayBag([3,4])
-    >>> a == c
-    True
-    """
+    """Implement bag ADT using an array."""
     default_capacity = 10
 
     def __init__(self, source_collection = None):
@@ -262,7 +229,3 @@ class ArraySortedBag(ArrayBag):
             self.items.insert(mid, item)
         self.size += 1
         self.mod_count += 1
-            
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod()

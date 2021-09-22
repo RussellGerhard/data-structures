@@ -1,26 +1,12 @@
 """
-Author: Russell Gerhard
-Implement a simple node class.
+Author:  Russell Gerhard
+Purpose: Provide singly linked list.
+
+Exports:
+    LinkedList: List implementation based on singly-linked nodes.
 """
 
-class Node:
-    """Represent a singly-linked node."""
-    def __init__(self, data, _next = None):
-        """Instantiate a node."""
-        self.data = data
-        self.next = _next
-        
-    def __str__(self):
-        return f"{self.data}"
-
-    def __repr__(self):
-        return f"{self.data}"
-
-class TwoWayNode(Node):
-    """Represent a doubly-linked node."""
-    def __init__(self, data, _next = None, prev = None):
-        Node.__init__(self, data, _next)
-        self.prev = prev
+from nodes import Node
 
 class LinkedList:
     """Represent a singly-linked list."""
@@ -29,77 +15,25 @@ class LinkedList:
         self.head = head
         self.length = 0
 
-    def __getitem__(self, index):
-        probe = self.head
-        while probe != None and index != 0:
-            probe = probe.next
-            index -= 1
-        if probe != None:
-            return probe
+    # Accessors
+    def __contains__(self, item):
+        if self.index(item) == -1:
+            return False
         else:
-            raise IndexError("LinkedList index out of range")
-
-    def __len__(self):
-        """Return length of self."""
-        return self.length
-        
-    def __repr__(self):
-        """Get representation of the linked list."""
-        out = ''
-        probe = self.head
-        while probe != None:
-            out += f"{probe.data} "
-            probe = probe.next
-        return out
-
-    def __setitem__(self, index, value):
-        probe = self.head
-        while probe != None and index != 0:
-            probe = probe.next
-            index -= 1
-        if probe != None:
-            probe.data = value
-        else:
-            raise IndexError("LinkedList index out of range")
+            return True
             
-    def __str__(self):
-        """Get string representation of the linked list."""
-        out = ''
-        probe = self.head
-        while probe != None:
-            out += f"{probe.data} "
-            probe = probe.next
-        return out
-
-    def append(self, item):
-        """Append an item to the end of the list, O(n) time."""
-        if self.head == None:
-            self.head = Node(item, None)
-        else:
-            probe = self.head
-            # Find tail node
-            while probe.next != None:
-                probe = probe.next
-            probe.next = Node(item, None)
-
-        self.length += 1
-
-    def clear(self):
-        """Clear list."""
-        self.head = None
-        self.length = 0
-
     def copy(self):
-        """Make a copy of the list."""
-        copy = LinkedList()
+        """Return a copy of self."""        
+        # Traverse self and add each Node to duplicate
         probe = self.head
+        duplicate = LinkedList(probe)
         while probe != None:
-            copy.append(probe)
+            duplicate.next = probe.next
             probe = probe.next
-        return copy
+        return duplicate
 
     def count(self, item):
-        """Count number of instances of item in list."""
+        """Count number of occurrences of item in self."""
         count = 0
         probe = self.head
         while probe != None:
@@ -107,38 +41,29 @@ class LinkedList:
                 count += 1
             probe = probe.next
         return count
-
-    def disp(self):
-        """Display like a stack."""
+    
+    def __getitem__(self, index):
+        """
+        Return item at index in self.
+        Precondition: index in range(0, len(self)).
+        Raises: IndexError
+        """
+        # Check precondition
+        if index < 0:
+            raise IndexError("LinkedList index cannot be negative.")
+        
+        # Traverse self to find index
         probe = self.head
-        while probe != None:
-            print(probe)
+        while probe != None and index != 0:
             probe = probe.next
-
-    def extend(self, iterable):
-        """Extend list by appending items in iterable."""
-        if self.head == None:
-            self.head = Node(iterable[0], None)
-            self.length += 1
-
-            probe = self.head
-            for item in iterable[1:]:
-                probe.next = Node(item, None)
-                self.length += 1
-                probe = probe.next
-
-        else: 
-            probe = self.head
-            while probe.next != None:
-                probe = probe.next
-
-            for item in iterable:
-                probe.next = Node(item, None)
-                self.length += 1
-                probe = probe.next
+            index -= 1
+        if probe != None:
+            return probe
+        else:
+            raise IndexError("LinkedList index out of range.")
 
     def index(self, item):
-        """Return first index of value."""
+        """Return first index of value in self, else return -1."""
         index = 0
         probe = self.head
         while probe != None and probe.data != item:
@@ -148,12 +73,80 @@ class LinkedList:
         else:
             return probe.data
 
+    def __len__(self):
+        """Return length of self."""
+        return self.length
+        
+    def __repr__(self):
+        """Return the unique string representation of self."""
+        out = ''
+        # Traverse self to append all data
+        probe = self.head
+        while probe != None:
+            out += f"{probe.data}, "
+            probe = probe.next
+        out = out[:-2]
+        out = "'[" + out + "]'"
+        return out
+            
+    def __str__(self):
+        """Return string representation of self."""
+        out = ''
+        # Traverse self to append all data
+        probe = self.head
+        while probe != None:
+            out += f"{probe.data}, "
+            probe = probe.next
+        out = out[:-2]
+        out = '[' + out + ']'
+        return out
+
+    # Mutators
+    def append(self, item):
+        """Place item at end of self."""
+        if self.head == None:
+            self.head = Node(item, None)
+        else:
+            probe = self.head
+            while probe.next != None:
+                probe = probe.next
+            probe.next = Node(item, None)
+        self.length += 1
+
+    def clear(self):
+        """Clear self."""
+        self.head = None
+        self.length = 0
+
+    def extend(self, iterable):
+        """Extend self by appending items in iterable."""
+        if self.head == None:
+            self.head = Node(iterable[0], None)
+            self.length += 1
+            
+            probe = self.head
+            for item in iterable[1:]:
+                probe.next = Node(item, None)
+                self.length += 1
+                probe = probe.next
+        else:
+            probe = self.head
+            while probe.next != None:
+                probe = probe.next
+
+            for item in iterable:
+                probe.next = Node(item, None)
+                self.length += 1
+                probe = probe.next
+
     def insert(self, index, item):
-        """Insert item before index."""
-        if index <= 0 or self.head == None: # Insert at head or list empty
+        """Insert item in self before index."""
+        # Insert at head or self is empty
+        if index <= 0 or self.head == None:
             self.head = Node(item, self.head)
             self.length += 1
-        else: # Insert somewhere in rest
+        # Insert somewhere in rest of self
+        else:
             probe = self.head
             while index > 1 and probe.next != None:
                 probe = probe.next
@@ -162,67 +155,67 @@ class LinkedList:
             self.length += 1
 
     def pop(self, index = 0):
-        """Remove and return item at index."""
+        """
+        Remove and return item at index.
+        Precondition: self is not empty, index in range(0, len(self)).
+        Raises: IndexError
+        Postcondition: item at index is not in self.
+        """
+        # Check precondition
         if self.head == None:
             raise IndexError("pop from empty list")
-        
+        elif index < 0 or index >= len(self):
+            raise IndexError("pop index out of range")
         else:
-            # Remove from head of list
-            if index <= 0: 
+            # Remove from head
+            if index == 0: 
                 out = self.head.data
                 self.head = self.head.next
                 self.length -= 1
                 return out
-            
-            # Trying to remove from second position or larger in singleton list
-            elif index > 0 and self.head.next == None:
-                raise IndexError("pop index out of range")
 
-            # Remove from rest of list
+            # Self must contain at least two items
             else:
                 probe = self.head
                 while index > 1 and probe.next.next != None:
                     probe = probe.next
                     index -= 1
-                if index > 1:
-                    raise IndexError("pop index out of range")
                 out = probe.next.data
                 probe.next = probe.next.next
                 self.length -= 1
                 return out
-
-    def prepend(self, item):
-        """Prepend an item to the list."""
-        self.head = Node(item, self.head)
-        self.length += 1
-
-    def push(self, item):
-        self.prepend(item)
-
+            
     def remove(self, item):
-        """Remove first occurence of value."""
+        """
+        Remove first occurence of item in self.
+        Precondition: item must be in self.
+        Raises: KeyError
+        """
         probe = self.head
-        if probe == None: # List is empty
-            raise ValueError("LinkedList.remove(x): x not in list")
+        if probe == None:
+            raise KeyError("LinkedList.remove(x): x not in list")
         else:
-            if probe.data == item: # Remove from beginning
+             # Remove from beginning
+            if probe.data == item:
                 self.head = probe.next
                 self.length -= 1
+            # Remove from rest of self
             else:
                 while probe.next != None and probe.next.data != item:
                     probe = probe.next
                 if probe.next == None:
-                    raise ValueError("LinkedList.remove(x): x not in list")
+                    raise KeyError("LinkedList.remove(x): x not in list")
                 else:
                     probe.next = probe.next.next
                     self.length -= 1
 
     def reverse(self):
-        """Reverse *IN PLACE*."""
+        """Reverse contents of self in place."""
         if self.length > 1:
             probe1 = self.head
             probe2 = self.head.next
             probe1.next = None
+            # Traverse self with three pointers: island, probe1, and probe2
             while probe2.next != None:
                 island = probe1
                 probe1 = probe2
@@ -230,9 +223,28 @@ class LinkedList:
                 probe1.next = island
             probe2.next = probe1
             self.head = probe2
+        
+    def __setitem__(self, index, value):
+        """
+        Set item at index to value.
+        Precondition: index in range(0, len(self)).
+        Raises: IndexError
+        """
+        # Check precondition
+        if index < 0:
+            raise IndexError("LinkedList index cannot be negative.")
+        # Traverse self to find index
+        probe = self.head
+        while probe != None and index != 0:
+            probe = probe.next
+            index -= 1
+        if probe != None:
+            probe.data = value
+        else:
+            raise IndexError("LinkedList index out of range.")
 
     def sort(self, reverse = False):
-        """(merge) sort the list IN PLACE in ascending order."""
+        """Use mergesort to sort contents of self."""
         copy_buffer = LinkedList()
         for _ in range(self.length):
             copy_buffer.prepend(None)
@@ -281,40 +293,3 @@ class LinkedList:
         for i in range(left, right + 1):
             self[i] = copy_buffer[cb_ind].data
             cb_ind += 1
-
-        # This is the normal, assignment way, but assignment is an expensive
-        # linear time operation for linked lists, so prepending and reversing
-        # seems better to me.
-        """
-        # Use copy_buffer to keep track of merged order
-        for i in range(left, right + 1):
-            if index1 > mid:
-                copy_buffer[i] = (self[index2].data)
-                index2 += 1
-            elif index2 > right:
-                copy_buffer[i] = (self[index1].data)
-                index1 += 1
-            # Prepending greatest instead of appending least
-            elif self[index1].data < self[index2].data:
-                copy_buffer[i] = (self[index1].data)
-                index1 += 1
-            else:
-                copy_buffer[i] = (self[index2].data)
-                index2 += 1
-                
-        # Copy values over to self
-        for i in range(left, right + 1):
-            self[i] = copy_buffer[i].data
-        """
-
-def make_two_way(l: LinkedList) -> LinkedList:
-    if l.head == None:
-        l.tail = l.head
-    else:
-        probe = TwoWayNode(l.head.data, l.head.next, None)
-        while probe.next != None:
-            temp = probe
-            probe = probe.next
-            probe = TwoWayNode(probe, probe.next, temp)
-        l.tail = probe
-    

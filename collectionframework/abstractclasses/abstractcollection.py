@@ -1,35 +1,22 @@
 """
-Author: Russell Gerhard
-Provide an abstract collection superclass for inheritance
-by any implementation of a specific abstract collection.
+Author:  Russell Gerhard
+Purpose: Provide an abstract collection superclass for inheritance
+         by any implementation of a specific abstract collection.
+
+Exports:
+    AbstractCollection: Abstract class providing some common implementations
+                        of methods for collection types.
 """
 
 class AbstractCollection(object):
     """
     Implement methods common to all implementations of the collections ADTs.
     """
-    default_capacity = 10
-
     def __init__(self):
         """Initialize self, optionally including items in source_collection."""
-        self.size = 0
+        self.length = 0
 
     # Accessors
-    def __add__(self, other):
-        """
-        Return a bag that contains contents of self and other.
-        Precondition: other must be of type bag.
-        Raises: TypeError if other is not a bag.
-        """
-        # Check precondition
-        if type(other) != type(self):
-            raise TypeError("can only concatenate collections of different types")
-        # Create new, abstract bag
-        out = type(self)(self)
-        for item in other:
-            out.add(item)
-        return out
-
     def clone(self):
         """Return copy of self."""
         return type(self)(self)
@@ -45,9 +32,8 @@ class AbstractCollection(object):
     def __eq__(self, other):
         """
         Determine if self is equal to other.
-        Return True if self and other of same type and contain same items
-        in the same order.
-        Return False else.
+        Return True if self and other are of same type, have the same length,
+        and contain the same items in the same ordering, else return False.
         """
         if self is other:
             return True
@@ -68,11 +54,12 @@ class AbstractCollection(object):
 
     def __len__(self):
         """Return the number of items in self."""
-        return self.size
+        return self.length
+
+    def __repr__(self):
+        """Return the unique string representation of self."""
+        return '"' + str(self) + '"'
 
     def __str__(self):
         """Return the string representation of self."""
         return '[' + ", ".join(map(str, self)) + ']'
-            
-if __name__ == "__main__":
-    pass
