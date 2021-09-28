@@ -4,6 +4,7 @@ Purpose: Provide basic nodes for linked structures.
 
 Exports:
     Node:       Node with data and a single node link.
+    
     TwoWayNode: Node with data and two node links.
 """
 

@@ -1,10 +1,10 @@
 """
 Author:  Russell Gerhard
-Purpose: Lay blueprint (interface) for any class implementing bag ADT.
+Purpose: Lay blueprint (interface) for any class implementing set ADT.
 """
 
-class BagInterface:
-    """Specify interface for classes implementing bag ADT."""
+class SetInterface:
+    """Specify interface for classes implementing set ADT."""
 
     # Constructor
     def __init__(self, source_collection = None):
@@ -14,9 +14,9 @@ class BagInterface:
     # Accessor Methods
     def __add__(self, other):
         """
-        Return a new bag containing the contents of self and other.
-        Precondition: other must be of type bag.
-        Raises: TypeError if other is not a bag.
+        Return a new set containing the contents of self and other.
+        Precondition: other must be of type set.
+        Raises: TypeError if other is not a set.
         """
         return None
 
@@ -57,8 +57,9 @@ class BagInterface:
         """Remove all items from self."""
         pass
 
+    # Only difference from bag
     def add(self, item):
-        """Add item to self."""
+        """Add item to self if not already in self."""
         pass
 
     def remove(self, item):

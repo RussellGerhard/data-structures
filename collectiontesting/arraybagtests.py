@@ -1,6 +1,6 @@
 """
 Author:  Russell Gerhard
-Purpose: Create unit testing framework to test the ArrayBag implementation
+Purpose: Create unit testing framework for the ArrayBag implementation
          of the bag abstract data type.
 """
 
@@ -8,21 +8,6 @@ from bags import ArrayBag
 import unittest
 
 # Accessor Tests
-class TestClone(unittest.TestCase):
-
-    def test_clone_empty(self):
-        a = ArrayBag()
-        b = a.clone()
-        self.assertTrue(a is not b)
-        self.assertTrue(a == b)
-        
-    def test_clone_nonempty(self):
-        a = ArrayBag([1,4,3,2,5])
-        b = a.clone()
-        self.assertTrue(a is not b)
-        self.assertTrue(a == b)
-
-
 class TestConcatenation(unittest.TestCase):
 
     def test_concat_different_types(self):
@@ -50,6 +35,17 @@ class TestConcatenation(unittest.TestCase):
         d = a + b
         self.assertTrue(c == d)
 
+
+class TestContainment(unittest.TestCase):
+
+    def test_contain_false(self):
+        a = ArrayBag()
+        self.assertFalse(1 in a)
+
+    def test_contain_true(self):
+        a = ArrayBag([1,3,2])
+        self.assertTrue(2 in a)
+        
 
 class TestCount(unittest.TestCase):
 
@@ -135,7 +131,7 @@ class TestIter(unittest.TestCase):
         out = ''
         for item in a:
             out += item
-        self.assertTrue(out == 'bca')
+        self.assertTrue(out == 'acb')
 
 
 class TestLen(unittest.TestCase):
@@ -153,12 +149,12 @@ class TestRepr(unittest.TestCase):
 
     def test_repr_empty(self):
         a = ArrayBag()
-        self.assertTrue(a.__repr__() == "\"{}\"")
+        self.assertTrue(a.__repr__() == "ArrayBag()")
 
     # ArrayBag achieves average O(1) addition by appending
     def test_repr_nonempty(self):
         a = ArrayBag([5,2,3,'b'])
-        self.assertTrue(a.__repr__() == "\"{b, 3, 2, 5}\"")
+        self.assertTrue(a.__repr__() == "ArrayBag(5, 2, 3, b)")
 
 class TestStr(unittest.TestCase):
 
@@ -169,7 +165,7 @@ class TestStr(unittest.TestCase):
     # ArrayBag achieves average O(1) addition by appending
     def test_str_nonempty(self):
         a = ArrayBag([5,2,3,'b'])
-        self.assertTrue(a.__str__() == '{b, 3, 2, 5}')
+        self.assertTrue(a.__str__() == '{5, 2, 3, b}')
 
 
 # Mutator Tests
@@ -195,12 +191,14 @@ class TestClear(unittest.TestCase):
         b = ArrayBag()
         a.clear()
         self.assertTrue(a == b)
+        self.assertTrue(len(a) == 0)
 
     def test_clear_nonempty(self):
         a = ArrayBag([1,2,3,4,5])
         b = ArrayBag()
         a.clear()
         self.assertTrue(a == b)
+        self.assertTrue(len(a) == 0)
 
 
 class TestRemove(unittest.TestCase):

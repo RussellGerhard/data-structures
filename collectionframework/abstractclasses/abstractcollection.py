@@ -12,13 +12,33 @@ class AbstractCollection(object):
     """
     Implement methods common to all implementations of the collections ADTs.
     """
-    def __init__(self):
+    
+    # Constructor
+    def __init__(self, source_collection = None):
         """Initialize self, optionally including items in source_collection."""
         self.length = 0
+        if source_collection:
+            for item in source_collection:
+                self.add(item)
 
     # Accessors
-    def clone(self):
-        """Return copy of self."""
+    def __add__(self, other):
+        """
+        Return a collection that contains contents of self and other.
+        Precondition: other must be same type as self
+        Raises: TypeError
+        """
+        # Check precondition
+        if type(other) != type(self):
+            raise TypeError("cannot concatenate bag with different type")
+        # Instantiate new object of type self
+        out = type(self)(self)
+        for item in other:
+            out.add(item)
+        return out
+
+    def copy(self):
+        """Return a copy of self."""
         return type(self)(self)
 
     def count(self, item):
@@ -44,7 +64,7 @@ class AbstractCollection(object):
         else:
             other_iter = iter(other)
             for item in self:
-                if item != next(other):
+                if item != next(other_iter):
                     return False
             return True
         
@@ -58,7 +78,8 @@ class AbstractCollection(object):
 
     def __repr__(self):
         """Return the unique string representation of self."""
-        return '"' + str(self) + '"'
+        out = f"{type(self).__name__}(" + ", ".join(map(str, self)) + ")"
+        return out
 
     def __str__(self):
         """Return the string representation of self."""

@@ -1,9 +1,15 @@
 """
-Author: Russell Gerhard
-Document the interface for the stack ADT.
+Author:  Russell Gerhard
+Purpose: Document the interface for the stack ADT.
 """
 
 class StackInterface:
+    """
+    Specify the interface to which any class implementing the stack ADT
+    must conform.
+    """
+
+    # Constructor
     def __init__(self, source_collection = None):
         """
         Initialize self, optionally pushing each element
@@ -14,7 +20,7 @@ class StackInterface:
     # Accessors
     def __add__(self, other):
         """
-        Push each item in other onto a copy of self, return this concatentation.
+        Drop other onto self, so that the bottom of other is on top of self.
         Precondition: other must be of type self.
         Raises: TypeError
         """
@@ -47,7 +53,7 @@ class StackInterface:
         """
         Return item at top of self.
         Precondition: self is not empty.
-        Raises: KeyError
+        Raises: LookupError
         """
         return 0
 
@@ -68,7 +74,7 @@ class StackInterface:
         """
         Remove and return item at top of self.
         Precondition: self is not empty.
-        Rasies: KeyError
+        Rasies: LookupError
         """
         pass
 

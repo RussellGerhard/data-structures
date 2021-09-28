@@ -7,7 +7,9 @@ Purpose: Implement set ADT using an array or linked list, implement a sorted set
 
 Exports:
     ArraySet: Set ADT implementation using an array.
+    
     ArraySortedSet: Sorted set ADT implementation using an array.
+    
     LinkedSet: Set ADT implementation using a linked list.
 """
          

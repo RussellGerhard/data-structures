@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 """
 Author:  Russell Gerhard
 Purpose: Implement a basic array object.
@@ -7,6 +5,9 @@ Purpose: Implement a basic array object.
 Exports:
     Array: Array that mimics functionality of explicity-memory-allocated arrays.
 """
+
+from copy import deepcopy
+
 
 class Array:
     """Represent an array."""
@@ -129,16 +130,41 @@ class Array:
             self.logical_size -= 1
             self.shrink()
             return out
-        
+
+    def remove(self, item):
+        """
+        Remove first occurence of item in self.
+        Precondition: item must be in self.
+        Raises: KeyError
+        """
+        i = 0
+        while i < self.size():
+            if item == self[i]:
+                break
+            i += 1
+        if i == self.size():
+            raise KeyError("Array.remove(x): x not in array")
+        else:
+            i += 1
+            while i != self.size():
+                self[i - 1] = self[i]
+                i += 1
+
+        # Shrink if necessary
+        self.logical_size -= 1
+        self.shrink()
+    
     def __setitem__(self, index, value):
         """
         Set value at index in array.
         Precondition: Index in range(0, self.size())
         Raises: IndexError
         """
-        if index < 0 or index >= self.size():
+        if index < 0 or index >= len(self):
             raise IndexError("array index out of range")
         self.items[index] = value
+        if index >= self.size():
+            self.logical_size = index + 1
 
     def shrink(self):
         """

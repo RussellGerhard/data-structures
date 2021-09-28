@@ -1,7 +1,3 @@
-from abstractbag import AbstractBag
-from array import Array
-from linkedlist import LinkedList
-
 """
 Author:  Russell Gerhard
 Purpose: Implement bag ADT using an array or linked list, implement a sorted bag
@@ -9,9 +5,15 @@ Purpose: Implement bag ADT using an array or linked list, implement a sorted bag
 
 Exports:
     ArrayBag: Bag ADT implementation using an array.
+    
     ArraySortedBag: Sorted bag ADT implementation using an array.
+    
     LinkedBag: Bag ADT implementation using a linked list.
 """
+
+from abstractclasses.abstractbag import AbstractBag
+from dynamicarray import Array
+from lists import LinkedList
 
 class ArrayBag(AbstractBag):
     """Implement bag ADT using an array."""
@@ -160,22 +162,10 @@ class LinkedBag(AbstractBag):
         AbstractBag.__init__(self, source_collection)
 
     # Accessors
-    def __contains__(self, item):
-        """
-        Return true and set self.position to item index if item in self.
-        Else return False.
-        """
-        self.position = -1
-        for obj in self:
-            self.position += 1
-            if item == obj:
-                return True
-        return False
-    
     def __iter__(self):
         """Support iteration over the object to visit each item."""
         probe = self.items.head
-        while probe != None:
+        while probe is not None:
             yield probe.data
             probe = probe.next
 
