@@ -77,10 +77,6 @@ class TestAbstractCollection():
         a = self.class_type([3,1,2,3])
         self.assertTrue(a.count(2) == 1)
 
-        # Nonempty, two instances
-        a = self.class_type([3,1,2,3])
-        self.assertTrue(a.count(3) == 2)
-
     def test_equality(self):
         # Same object
         a = self.class_type()

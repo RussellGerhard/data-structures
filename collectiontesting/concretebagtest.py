@@ -5,7 +5,7 @@ Purpose: Create a unit testing framework for the methods implemented in all
 
 Exports:
     TestConcreteBag: Test all methods provided by any concrete class
-                     implementing a bag.
+                     implementing a bag. Meant to be inherited.
 
     TestArrayBag: Test all methods in and inherited by the ArrayBag
                   implementation of the bag ADT.
@@ -24,12 +24,14 @@ import unittest
 
 class TestConcreteBag(TestAbstractBag):
 
-    # Accessor tests
-    def test_unordered_equality(self):
-        a = self.class_type([1,5,2,4,7,7,7,1])
-        b = self.class_type([1,7,7,4,1,7,5,2])
-        self.assertTrue(a == b)
+    # Constructor tests
+    def test_constructor(self):
+        a = self.class_type([1,4,2,'a','b',3,2,1,'b'])
+        self.assertTrue(str(a) == "{1, 4, 2, a, b, 3, 2, 1, b}")
+        a = self.class_type()
+        self.assertTrue(str(a) == "{}")
     
+    # Accessor tests
     def test_iterate(self):
         a = self.class_type([1,'c','c',2,5,4,2,5,'b'])
         l = [1,'c','c',2,5,4,2,5,'b']
@@ -60,12 +62,28 @@ class TestConcreteBag(TestAbstractBag):
         self.assertTrue(str(a) == "{1, 6, 7}")
         a.remove(7)
         self.assertTrue(str(a) == "{1, 6}")
+        
 
-class TestArrayBag(TestConcreteBag, unittest.TestCase):
+class TestArrayBag(TestConcreteBag):
     class_type = ArrayBag
 
-class TestArraySortedBag(TestConcreteBag, unittest.TestCase):
+    # Constructor tests
+    def test_constructor(self):
+        a = self.class_type([1,4,2,'a','b',3,2,1,'b'])
+        self.assertTrue(str(a) == "{1, 4, 2, a, b, 3, 2, 1, b}")
+        a = self.class_type()
+        self.assertTrue(str(a) == "{}")
+    
+
+class TestArraySortedBag(TestConcreteBag):
     class_type = ArraySortedBag
+
+    # Constructor tests
+    def test_constructor(self):
+        a = self.class_type([1,4,2,3,2,1])
+        self.assertTrue(str(a) == "{1, 1, 2, 2, 3, 4}")
+        a = self.class_type()
+        self.assertTrue(str(a) == "{}")
 
     # Accessor tests
     def test_iterate(self):
@@ -96,6 +114,14 @@ class TestArraySortedBag(TestConcreteBag, unittest.TestCase):
         a.add(9)
         self.assertTrue(str(a) == "{1, 2, 4, 9, 9}")
 
-class TestLinkedBag(TestConcreteBag, unittest.TestCase):
+
+class TestLinkedBag(TestConcreteBag):
     class_type = LinkedBag
+
+    # Constructor tests
+    def test_constructor(self):
+        a = self.class_type([1,4,2,'a','b',3,2,1,'b'])
+        self.assertTrue(str(a) == "{1, 4, 2, a, b, 3, 2, 1, b}")
+        a = self.class_type()
+        self.assertTrue(str(a) == "{}")
         

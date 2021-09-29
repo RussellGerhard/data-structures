@@ -5,7 +5,7 @@ Purpose: Create a unit testing framework for the methods implemented in
 
 Exports:
     TestConreteList: Test all methods provided by any concrete class
-                     implementing a list.
+                     implementing a list. Meant to be inherited.
 
     TestArrayList: Test all methods in and inherited by the ArrayList
                    implementation.
@@ -87,11 +87,14 @@ class TestConcreteList(TestAbstractList):
         b = self.class_type([1,2,3,4,5,6])
         self.assertTrue(a == b)
 
+
 class TestArrayList(TestConcreteList, unittest.TestCase):
     class_type = ArrayList
 
+
 class TestLinkedList(TestConcreteList, unittest.TestCase):
     class_type = LinkedList
+
 
 class TestDoublyLinkedList(TestConcreteList, unittest.TestCase):
     class_type = DoublyLinkedList
