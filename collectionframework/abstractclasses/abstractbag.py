@@ -35,3 +35,7 @@ class AbstractBag(AbstractCollection):
                 if self.count(item) != other.count(item):
                     return False
             return True
+        
+    def __str__(self):
+        """Return string representation of self."""
+        return '{' + ", ".join(map(str, self)) + '}'

@@ -13,7 +13,7 @@ Exports:
 
 from abstractclasses.abstractbag import AbstractBag
 from dynamicarray import Array
-from lists import LinkedList
+from lists import DoublyLinkedList
 
 class ArrayBag(AbstractBag):
     """Implement bag ADT using an array."""
@@ -31,6 +31,7 @@ class ArrayBag(AbstractBag):
         Return True if item in self, set self.position to index.
         Else return False.
         """
+        self.position = -1
         for obj in self:
             self.position += 1
             if item == obj:
@@ -65,7 +66,6 @@ class ArrayBag(AbstractBag):
         Postcondition: Item is not in self.
         """
         # Reset position and check precondition
-        self.position = -1
         if item not in self:
             raise ValueError("ArrayBag.remove(x): x not in ArrayBag")
         
@@ -126,6 +126,21 @@ class ArraySortedBag(ArrayBag):
         Precondition: self is sorted.
         Postcondition: self is sorted.
         """
+
+        # Check comparable item
+        try:
+            item < item
+        except TypeError:
+            msg = f"{type(self).__name__} must only contain items that support comparison."
+            raise TypeError(msg)
+
+        # Check item comparable with items in bag already
+        if not self.is_empty():
+            try:
+                item < self.items[0]
+            except TypeError:
+                msg = f"{item} does not support comparison with bag element: {self.items[0]}."
+                raise TypeError(msg)
         
         # Binary search for index position
         left = 0
@@ -157,11 +172,27 @@ class LinkedBag(AbstractBag):
 
     def __init__(self, source_collection = None):
         """Initialize self, optionally including items in source_collection."""
-        self.items = LinkedList()
+        self.items = DoublyLinkedList()
         self.position = -1
         AbstractBag.__init__(self, source_collection)
 
     # Accessors
+    def __contains__(self, item):
+        """
+        Return True if item in self, set self.position to index.
+        Else return False.
+        """
+        self.position = -1
+        probe = self.items.head
+        while probe is not None:
+            self.position += 1
+            if item == probe.data:
+                return True
+            probe = probe.next
+        
+        self.position = -1
+        return False
+    
     def __iter__(self):
         """Support iteration over the object to visit each item."""
         probe = self.items.head
@@ -173,11 +204,11 @@ class LinkedBag(AbstractBag):
     def clear(self):
         """Empty self, reset length to 0 and position tracker to -1."""
         self.length = 0
-        self.items = LinkedList()
+        self.items = DoublyLinkedList()
 
     def add(self, item):
         """Add item to self."""
-        self.items.insert(0, item)
+        self.items.insert(len(self), item)
         self.length += 1
 
     def remove(self, item):
@@ -188,7 +219,6 @@ class LinkedBag(AbstractBag):
         Postcondition: Item is not in self.
         """
         # Reset position and check precondition
-        self.position = -1
         if item not in self:
             raise ValueError("LinkedBag.remove(x): x not in LinkedBag")
             

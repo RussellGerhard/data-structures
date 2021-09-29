@@ -132,17 +132,4 @@ class ListInterface:
     def sort(self, reverse = False):
         """Use mergesort to sort contents of self."""
         pass
-
     
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-        

@@ -25,7 +25,6 @@ import unittest
 class TestConcreteBag(TestAbstractBag):
 
     # Accessor tests
-    # Iteration
     def test_unordered_equality(self):
         a = self.class_type([1,5,2,4,7,7,7,1])
         b = self.class_type([1,7,7,4,1,7,5,2])
@@ -39,7 +38,7 @@ class TestConcreteBag(TestAbstractBag):
 
     # Mutator tests
     def test_clear(self):
-        a = self.class_type([1,1,4,4,4,'a'])
+        a = self.class_type([1,1,4,4,4])
         b = self.class_type()
         a.clear()
         self.assertTrue(a.is_empty())
@@ -52,8 +51,8 @@ class TestConcreteBag(TestAbstractBag):
         a.add(2)
         a.add(1)
         a.add('a')
-        self.assertTrue(a.length == 4)
-        self.assertTrue(repr(a) == f"{self.class_type.__name__}(1, 2, 1, a)")
+        self.assertTrue(len(a) == 4)
+        self.assertTrue(str(a) == "{1, 2, 1, a}")
 
     def test_remove(self):
         a = self.class_type([1,1,6,7])
@@ -66,15 +65,36 @@ class TestArrayBag(TestConcreteBag, unittest.TestCase):
     class_type = ArrayBag
 
 class TestArraySortedBag(TestConcreteBag, unittest.TestCase):
-    class_type = ArraySortedBag        
-        
+    class_type = ArraySortedBag
+
+    # Accessor tests
+    def test_iterate(self):
+        a = self.class_type([1,2,5,4,2,5])
+        l = [1,2,2,4,5,5]
+        for i,item in enumerate(a):
+            self.assertTrue(l[i] == item)
+
+    def test_repr(self):
+        a = self.class_type([6,1,4,2,3,5])
+        self.assertTrue(repr(a) == f"{self.class_type.__name__}(1, 2, 3, 4, 5, 6)")
+
+    def test_str(self):
+        a = self.class_type([6,1,4,2,3,5])
+        self.assertTrue(str(a) == "{1, 2, 3, 4, 5, 6}")
+
+    # Mutator tests
     def test_add(self):
         a = self.class_type()
         a.add(9)
         a.add(4)
+        with self.assertRaises(TypeError):
+            a.add({'a':1})
+        with self.assertRaises(TypeError):
+            a.add('a')
         a.add(2)
         a.add(1)
-        self.assertTrue(str(a) == "{1, 2, 4, 9}")
+        a.add(9)
+        self.assertTrue(str(a) == "{1, 2, 4, 9, 9}")
 
 class TestLinkedBag(TestConcreteBag, unittest.TestCase):
     class_type = LinkedBag

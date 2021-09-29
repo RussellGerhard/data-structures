@@ -15,17 +15,22 @@ Exports:
          
 class ArraySet(ArrayBag):
     """Implement set ADT using an array, inheriting from ArrayBag."""
+
+    # Mutators
     def add(self, item):
         """
         If item not in self, add item to self.
         Increase length, increase capacity as needed.
         """
         if item not in self:
-            self.items.insert(len(self), item)
-            self.length += 1
+            ArrayBag.add(item)
 
 class ArraySortedSet(ArraySortedBag):
-    """Implement sorted set ADT using an array, inheriting from ArraySortedBag."""
+    """
+    Implement sorted set ADT using an array, inheriting from ArraySortedBag.
+    """
+
+    # Mutators
     def add(self, item):
         """
         Add item to self if not already in self.
@@ -34,22 +39,18 @@ class ArraySortedSet(ArraySortedBag):
         Precondition: self is sorted.
         Postcondition: self is sorted.
         """
-        # Duck typing!
-        try:
-            item < item
-        except TypeError:
-            raise TypeError("ArraySortedSet contains items that support comparison.")
-            
+        # Preconditions checked in ArraySortedBag.add
         if item not in self:
             ArraySortedBag.add(self, item)
 
 class LinkedSet(LinkedBag):
     """Implement set ADT using a linked list, inheriting from LinkedBag."""
+
+    # Mutators
     def add(self, item):
         """
         If item not in self, add item to self.
         Increase length if add performed.
         """
         if item not in self:
-            self.items.insert(0, item)
-            self.length += 1
+            LinkedBag.add(self, item)

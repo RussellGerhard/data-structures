@@ -4,8 +4,8 @@ Purpose: Provide classes implementing the list ADT using a dynamic array, singly
          linked list, and doubly linked list.
 
 Exports:
-    ArrayList: List implementation based on an array
-    .
+    ArrayList: List implementation based on an array.
+
     LinkedList: List implementation based on singly-linked nodes.
     
     DoublyLinkedList: Linked list with tail pointer whose nodes have pointers

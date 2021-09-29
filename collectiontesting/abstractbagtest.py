@@ -19,4 +19,13 @@ class TestAbstractBag(TestAbstractCollection):
     def test_equality_unordered(self):
         a = self.class_type([1,2,3,4,5])
         b = self.class_type([5,4,3,2,1])
-        self.asserTrue(a == b)
+        self.assertTrue(a == b)
+
+    def test_str(self):
+        # Empty
+        a = self.class_type()
+        self.assertTrue(str(a) == "{}")
+
+        # Nonempty
+        a = self.class_type([1,5,2,3])
+        self.assertTrue(str(a) == "{1, 5, 2, 3}")

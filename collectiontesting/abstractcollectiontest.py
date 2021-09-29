@@ -15,7 +15,6 @@ class TestAbstractCollection():
     
     # Accessor tests
     def test_concatentation(self):
-        
         # Different types
         a = self.class_type()
         b = [0, 1, 2]
@@ -42,7 +41,6 @@ class TestAbstractCollection():
         self.assertTrue(c == d)
 
     def test_containment(self):
-
         # Item not in collection
         a = self.class_type()
         self.assertFalse(1 in a)
@@ -52,7 +50,6 @@ class TestAbstractCollection():
         self.assertTrue(2 in a)
 
     def test_copy(self):
-        
         # Empty
         a = self.class_type()
         b = a.copy()
@@ -68,7 +65,6 @@ class TestAbstractCollection():
         self.assertTrue(b is not a)
 
     def test_count(self):
-
         # Empty
         a = self.class_type()
         self.assertTrue(a.count(1) == 0)
@@ -86,7 +82,6 @@ class TestAbstractCollection():
         self.assertTrue(a.count(3) == 2)
 
     def test_equality(self):
-
         # Same object
         a = self.class_type()
         b = a
@@ -112,7 +107,6 @@ class TestAbstractCollection():
         self.assertTrue(a == b)
 
     def test_is_empty(self):
-
         # Is empty
         a = self.class_type()
         self.assertTrue(a.is_empty())
@@ -122,7 +116,6 @@ class TestAbstractCollection():
         self.assertFalse(a.is_empty())
 
     def test_len(self):
-
         # Empty
         a = self.class_type()
         self.assertTrue(len(a) == 0)
@@ -132,7 +125,6 @@ class TestAbstractCollection():
         self.assertTrue(len(a) == 3)
 
     def test_repr(self):
-
         # Empty
         a = self.class_type()
         self.assertTrue(repr(a) == f"{self.class_type.__name__}()")
@@ -142,7 +134,6 @@ class TestAbstractCollection():
         self.assertTrue(repr(a) == f"{self.class_type.__name__}(5, 2, 3, b)")
 
     def test_str(self):
-
         # Empty
         a = self.class_type()
         self.assertTrue(str(a) == "[]")
