@@ -204,6 +204,7 @@ class LinkedBag(AbstractBag):
     def clear(self):
         """Empty self, reset length to 0 and position tracker to -1."""
         self.length = 0
+        self.position = -1
         self.items = DoublyLinkedList()
 
     def add(self, item):

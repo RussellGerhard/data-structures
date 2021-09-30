@@ -64,18 +64,15 @@ class TestConcreteBag(TestAbstractBag):
         self.assertTrue(str(a) == "{1, 6}")
         
 
-class TestArrayBag(TestConcreteBag):
+class TestArrayBag(TestConcreteBag, unittest.TestCase):
     class_type = ArrayBag
 
-    # Constructor tests
-    def test_constructor(self):
-        a = self.class_type([1,4,2,'a','b',3,2,1,'b'])
-        self.assertTrue(str(a) == "{1, 4, 2, a, b, 3, 2, 1, b}")
-        a = self.class_type()
-        self.assertTrue(str(a) == "{}")
+
+class TestLinkedBag(TestConcreteBag, unittest.TestCase):
+    class_type = LinkedBag
     
 
-class TestArraySortedBag(TestConcreteBag):
+class TestArraySortedBag(TestConcreteBag, unittest.TestCase):
     class_type = ArraySortedBag
 
     # Constructor tests
@@ -113,15 +110,4 @@ class TestArraySortedBag(TestConcreteBag):
         a.add(1)
         a.add(9)
         self.assertTrue(str(a) == "{1, 2, 4, 9, 9}")
-
-
-class TestLinkedBag(TestConcreteBag):
-    class_type = LinkedBag
-
-    # Constructor tests
-    def test_constructor(self):
-        a = self.class_type([1,4,2,'a','b',3,2,1,'b'])
-        self.assertTrue(str(a) == "{1, 4, 2, a, b, 3, 2, 1, b}")
-        a = self.class_type()
-        self.assertTrue(str(a) == "{}")
         

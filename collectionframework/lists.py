@@ -409,7 +409,8 @@ class DoublyLinkedList(AbstractList):
             if index == 0:
                 out = self.head.data
                 self.head = self.head.next
-                self.head.prev = None
+                if self.head:
+                    self.head.prev = None
                 return out
             # Remove from elsewhere
             else:

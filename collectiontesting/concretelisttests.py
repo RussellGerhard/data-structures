@@ -1,7 +1,7 @@
 """
 Author:  Russell Gerhard
 Purpose: Create a unit testing framework for the methods implemented in
-         aall concrete classes that implement the list ADT.
+         all concrete classes that implement the list ADT.
 
 Exports:
     TestConreteList: Test all methods provided by any concrete class
@@ -22,6 +22,13 @@ from abstractlisttest import TestAbstractList
 import unittest
 
 class TestConcreteList(TestAbstractList):
+
+    # Constructor test
+    def test_constructor(self):
+        a = self.class_type([])
+        self.assertTrue(str(a) == "[]")
+        a = self.class_type([5,1,1,4,'a',7,4,"baba"])
+        self.assertTrue(str(a) == "[5, 1, 1, 4, a, 7, 4, baba]")
 
     # Accessor tests
     def test_iterate(self):
@@ -55,7 +62,8 @@ class TestConcreteList(TestAbstractList):
         a = self.class_type([1,2,3,4])
         self.assertTrue(a.pop(2) == 3)
         self.assertTrue(a.pop() == 1)
-        a.clear()
+        a.pop()
+        a.pop()
         with self.assertRaises(IndexError):
             a.pop()
 

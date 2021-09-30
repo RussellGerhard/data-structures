@@ -15,7 +15,7 @@ Exports:
                    implementation of the set ADT.
 """
 
-from concretebagtest import TestArrayBag, TestArraySortedBag, TestLinkedBag
+from concretebagtests import TestArrayBag, TestArraySortedBag, TestLinkedBag
 from sets import ArraySet, ArraySortedSet, LinkedSet
 import unittest
 

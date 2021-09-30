@@ -23,7 +23,7 @@ class ArraySet(ArrayBag):
         Increase length, increase capacity as needed.
         """
         if item not in self:
-            ArrayBag.add(item)
+            ArrayBag.add(self, item)
 
 class ArraySortedSet(ArraySortedBag):
     """

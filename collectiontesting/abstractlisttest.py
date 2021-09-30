@@ -15,7 +15,6 @@ from abstractcollectiontest import TestAbstractCollection
 class TestAbstractList(TestAbstractCollection):
 
     # Accessor tests
-    # Getitem
     def test_getitem(self):
         # Out of range, empty
         a = self.class_type()
@@ -32,14 +31,12 @@ class TestAbstractList(TestAbstractCollection):
         self.assertTrue(a[0] == 1)
         self.assertTrue(a[1] == 2)
 
-    # Index
     def test_index(self):
         a = self.class_type([1,3,2])
         self.assertTrue(a.index(4) == -1)
         self.assertTrue(a.index(3) == 1)
 
     # Mutator tests
-    # Add
     def test_add(self):
         a = self.class_type()
         a.add(1)
@@ -47,7 +44,6 @@ class TestAbstractList(TestAbstractCollection):
         self.assertTrue(a[0] == 1)
         self.assertTrue(a[1] == 2)
 
-    # Append
     def test_append(self):
         a = self.class_type()
         a.append(1)
@@ -55,7 +51,6 @@ class TestAbstractList(TestAbstractCollection):
         self.assertTrue(a[0] == 1)
         self.assertTrue(a[1] == 2)
 
-    # Prepend
     def test_prepend(self):
         a = self.class_type()
         a.prepend(1)

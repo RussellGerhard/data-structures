@@ -17,6 +17,10 @@ class AbstractStack(AbstractCollection):
         """Initialize self, optionally pushing items in source_collection."""
         AbstractCollection.__init__(self, source_collection)
 
+    def __str__(self):
+        """Return string representation of self."""
+        return '[' + " | ".join(map(str, self)) + ']'
+
     # Mutators
     def add(self, item):
         """Same as push, used to satisfy interface requirements."""
