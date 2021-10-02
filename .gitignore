@@ -1,4 +1,6 @@
-/__pycache__
-/collectiontesting/__pycache__
-/collectionframework/__pycache__
 /.DS_Store
+/__pycache__
+/collectiontesting/__pycache__/
+/collectionframework/__pycache__/
+/collectionframework/abstractclasses/__pycache__/
+

@@ -20,7 +20,7 @@ suite.addTests(loader.loadTestsFromModule(concretelisttests))
 #suite.addTests(loader.loadTestsFromModule(concretebagtests))
 suite.addTests(loader.loadTestsFromModule(concretesettests))
 suite.addTests(loader.loadTestsFromModule(concretestacktests))
-suite.addTests(loader.loadTestsFromModule(concretequeuetests))
+#suite.addTests(loader.loadTestsFromModule(concretequeuetests))
 
 # Initialize test runner, pass in suite and run
 runner = unittest.TextTestRunner(verbosity = 1)
