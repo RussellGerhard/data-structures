@@ -13,17 +13,19 @@ from lists import DoublyLinkedList
 
 class ArrayQueue(AbstractCollection):
     """Implement queue ADT using a circular array."""
-    
+
+    # Constructor
     def __init__(self, source_collection = None):
         """
         Initialize self, optionally adding each item in source_collection to
         self.
         """
         self.items = Array()
-        AbstractCollection.__init__(self, source_collection)
         self.front = 0
         self.rear = 0
+        AbstractCollection.__init__(self, source_collection)
 
+    # Accessors
     def __iter__(self):
         """Support iteration over every item in self from front to rear."""
         if self.front < self.rear:
@@ -48,10 +50,7 @@ class ArrayQueue(AbstractCollection):
             raise LookupError("Cannot peek at empty queue.")
         return self.items[self.front]
 
-    def __str__(self):
-        """Return string representation of self."""
-        return '[' + " < ".join(map(str, self)) + ']'
-
+    # Mutators
     def add(self, item):
         """Add item to rear of self, increment length."""
         # Grow circular array if necessary
@@ -62,10 +61,6 @@ class ArrayQueue(AbstractCollection):
 
             for i, obj in enumerate(self):
                 temp.items[i] = obj
-
-            # Array has one element, can never grow if empty
-            else:
-                temp_items[0] = self.items[0]
             
             self.items.capacity = len(self)*2
             self.items = temp.items
@@ -73,18 +68,17 @@ class ArrayQueue(AbstractCollection):
             # Reset array pointers
             self.front = 0
             self.rear = len(self) - 1
-            
-        # Add the item
-        if self.is_empty():
-            self.items[self.rear] = item
+             
+        # Update rear
+        if self.rear == self.items.capacity - 1:
+            self.rear = 0
+        elif self.is_empty():
+            pass
         else:
-            self.items[self.rear + 1] = item
-            # Update rear
-            if self.rear == self.items.capacity:
-                self.rear = 0
-            else:
-                self.rear += 1
-            
+            self.rear += 1
+
+        # Add new item at rear and increment length
+        self.items[self.rear] = item  
         self.length += 1
 
     def clear(self):
@@ -143,10 +137,6 @@ class DoublyLinkedQueue(AbstractCollection):
         if self.is_empty():
             raise LookupError("Cannot peek at empty queue.")
         return self.items.head.data
-
-    def __str__(self):
-        """Return string representation of self."""
-        return '[' + " < ".join(map(str, self)) + ']'
 
     # Mutators
     def add(self, item):

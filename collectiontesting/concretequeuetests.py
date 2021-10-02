@@ -25,7 +25,7 @@ class TestConcreteQueue(TestAbstractCollection):
         a = self.class_type()
         self.assertTrue(str(a) == "[]")
         a = self.class_type([5,'a',3,9,'b',9])
-        self.assertTrue(str(a) == "[5 < a < 3 < 9 < b < 9]")
+        self.assertTrue(str(a) == "[5, a, 3, 9, b, 9]")
 
     # Accessor tests
     def test_iterate(self):
@@ -49,12 +49,12 @@ class TestConcreteQueue(TestAbstractCollection):
         a.add(1)
         a.add(24)
         a.add(['a'])
-        self.assertTrue(str(a) == "[a < 1 < 24 < 24 < [a]]")
+        self.assertTrue(str(a) == "[a, 1, 24, ['a']]")
     
     def test_clear(self):
         a = self.class_type([2,1,2,'a','b',3])
         a.clear()
-        self.assertTrue(self.is_empty())
+        self.assertTrue(a.is_empty())
 
     def test_pop(self):
         a = self.class_type([5,1,'a'])
