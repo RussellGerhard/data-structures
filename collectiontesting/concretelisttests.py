@@ -67,13 +67,6 @@ class TestConcreteList(TestAbstractList):
         with self.assertRaises(IndexError):
             a.pop()
 
-    def test_remove(self):
-        a = self.class_type([1,2,3,4])
-        a.remove(2)
-        a.remove(4)
-        b = self.class_type([1,3])
-        self.assertTrue(a == b)
-
     def test_reverse(self):
         a = self.class_type([1,2,3,4])
         b = self.class_type([4,3,2,1])

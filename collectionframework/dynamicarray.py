@@ -89,73 +89,73 @@ class Array:
             self.capacity = len(self)*2
             self.items = temp.items
 
-    def insert(self, index, item):
-        """
-        Insert item in self before index position.
-        Precondition: Index is nonnegative.
-        Raises: IndexError
-        """
-        if index < 0:
-            raise IndexError("array index must be nonnegative")
-        else:
-            # Grow if necessary
-            self.grow()
+##    def insert(self, index, item):
+##        """
+##        Insert item in self before index position.
+##        Precondition: Index is nonnegative.
+##        Raises: IndexError
+##        """
+##        if index < 0:
+##            raise IndexError("array index must be nonnegative")
+##        else:
+##            # Grow if necessary
+##            self.grow()
+##
+##            # Index larger than logical size, append at end
+##            if index >= self.size():
+##                self.items[self.size()] = item
+##            # Otherwise, copy elements and insert
+##            else:
+##                i = self.size()
+##                while i != index:
+##                    self.items[i] = self.items[i - 1]
+##                    i -= 1
+##                self[i] = item
+##            
+##            self.logical_size += 1
 
-            # Index larger than logical size, append at end
-            if index >= self.size():
-                self.items[self.size()] = item
-            # Otherwise, copy elements and insert
-            else:
-                i = self.size()
-                while i != index:
-                    self.items[i] = self.items[i - 1]
-                    i -= 1
-                self[i] = item
-            
-            self.logical_size += 1
+##    def pop(self, index):
+##        """
+##        Take item at index in array out of the array and return it.
+##        Precondition: Index in range(0, self.size())
+##        Raises: IndexError
+##        """
+##        if index < 0 or index >= self.size():
+##            raise IndexError("array index out of range")
+##        else:
+##            i = index
+##            out = self.items[index]
+##            while i < self.size():
+##                self.items[i] = self.items[i + 1]
+##                i = i + 1
+##
+##            # Shrink if necessary
+##            self.logical_size -= 1
+##            self.shrink()
+##            return out
 
-    def pop(self, index):
-        """
-        Take item at index in array out of the array and return it.
-        Precondition: Index in range(0, self.size())
-        Raises: IndexError
-        """
-        if index < 0 or index >= self.size():
-            raise IndexError("array index out of range")
-        else:
-            i = index
-            out = self.items[index]
-            while i < self.size():
-                self.items[i] = self.items[i + 1]
-                i = i + 1
-
-            # Shrink if necessary
-            self.logical_size -= 1
-            self.shrink()
-            return out
-
-    def remove(self, item):
-        """
-        Remove first occurence of item in self.
-        Precondition: item must be in self.
-        Raises: KeyError
-        """
-        i = 0
-        while i < self.size():
-            if item == self[i]:
-                break
-            i += 1
-        if i == self.size():
-            raise KeyError("Array.remove(x): x not in array")
-        else:
-            i += 1
-            while i != self.size():
-                self[i - 1] = self[i]
-                i += 1
-
-        # Shrink if necessary
-        self.logical_size -= 1
-        self.shrink()
+##    def remove(self, item):
+##        """
+##        Remove first occurence of item in self.
+##        Precondition: item must be in self.
+##        Raises: KeyError
+##        """
+##        i = 0
+##        while i < self.size():
+##            if item == self[i]:
+##                break
+##            i += 1
+##        if i == self.size():
+##            raise KeyError("Array.remove(x): x not in array")
+##        else:
+##            i += 1
+##            while i != self.size():
+##                self[i - 1] = self[i]
+##                i += 1
+##
+##        # Shrink if necessary
+##        self.logical_size -= 1
+##        self.shrink()
     
     def __setitem__(self, index, value):
         """

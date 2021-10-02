@@ -46,10 +46,19 @@ class ArrayList(AbstractList):
 
     def insert(self, index, item):
         """Insert item in self before index, increment length."""
+        # Check if we need to grow and do so if necessary
+        self.items.grow()
+
         if index < 0:
-            self.items.insert(0, item)
-        else:
-            self.items.insert(index, item)
+            index = 0
+        elif index >= self.items.size():
+            index = self.items.size()
+        
+        i = self.items.size()
+        while i > index:
+            self.items[i] = self.items[i - 1]
+            i -= 1
+        self.items[index] = item
         self.length += 1
 
     def pop(self, index = 0):
@@ -60,23 +69,25 @@ class ArrayList(AbstractList):
         """
         # Check precondition
         if self.is_empty():
-            raise IndexError("pop from empty list")
+            raise IndexError("Cannot pop from empty list")
         elif index < 0 or index >= len(self):
-            raise IndexError("pop index out of range")
+            raise IndexError("Cannot pop index out of range")
         else:
-            return self.items.pop(index)
+            # Copy over from deletion point through the end of the list
+            out = self.items[index]
+            i = index + 1
+            while i < self.items.size():
+                self.items[i - 1] = self.items[i]
+                i += 1
+            self.items[self.items.size() - 1] = self.items.fill_value
 
-    def remove(self, item):
-        """
-        Remove first occurence of item in self, decrement length.
-        Precondition: item must be in self.
-        Raises: KeyError
-        """
-        if item not in self:
-            raise KeyError("ArrayList.remove(x): x not in list")
-        else:
-            self.items.remove(item)
+            # Decrement underlying array length and shrink if necessary
+            self.items.logical_size -= 1
+            self.items.shrink()
+
+            # Decrement list length and return value
             self.length -= 1
+            return out
 
     def reverse(self):
         """Reverse contents of self in place."""
@@ -221,30 +232,6 @@ class LinkedList(AbstractList):
                 probe.next = probe.next.next
                 self.length -= 1
                 return out
-            
-    def remove(self, item):
-        """
-        Remove first occurence of item in self, decrement lenght.
-        Precondition: item must be in self.
-        Raises: KeyError
-        """
-        probe = self.head
-        if probe is None:
-            raise KeyError("LinkedList.remove(x): x not in list")
-        else:
-             # Remove from beginning
-            if probe.data == item:
-                self.head = probe.next
-                self.length -= 1
-            # Remove from rest of self
-            else:
-                while probe.next is not None and probe.next.data != item:
-                    probe = probe.next
-                if probe.next is None:
-                    raise KeyError("LinkedList.remove(x): x not in list")
-                else:
-                    probe.next = probe.next.next
-                    self.length -= 1
 
     def reverse(self):
         """Reverse contents of self in place."""
@@ -429,39 +416,6 @@ class DoublyLinkedList(AbstractList):
                 # Update probe.next to skip the popped node
                 probe.next = probe.next.next
                 return out
-
-    def remove(self, item):
-        """
-        Remove first occurence of item in self, decrement length.
-        Precondition: item must be in self.
-        Raises: KeyError
-        """
-        if item not in self:
-            raise KeyError("DoublyLinkedList.remove(x): x not in list")
-        else:
-            # Remove from beginning
-            if self.head.data == item:
-                self.head = self.head.next
-                self.head.prev = None
-                self.length -= 1
-            # Remove from elsewhere
-            else:
-                probe = self.head
-                while probe.next is not None:
-                    if probe.next.data == item:
-                        break
-                    probe = probe.next
-
-                # Removed from middle
-                if probe.next.next:
-                    probe.next.next.prev = probe
-                # Removed tail
-                else:
-                    self.tail = probe
-
-                # Update tail position and length
-                probe.next = probe.next.next
-                self.length -= 1
                     
     def reverse(self):
         """Reverse contents of self in place."""

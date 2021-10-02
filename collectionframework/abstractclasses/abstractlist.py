@@ -56,4 +56,16 @@ class AbstractList(AbstractCollection):
     def prepend(self, item):
         """Insert item at index 0, increment length."""
         self.insert(0, item)
+
+    def remove(self, item):
+        """
+        Remove first occurence of item in self, decrement length.
+        Precondition: item must be in self.
+        Raises: KeyError
+        """
+        index = self.index(item)
+        if index == -1:
+            raise KeyError("Cannot remove item that is not in list.")
+        else:
+            self.pop(index)
     

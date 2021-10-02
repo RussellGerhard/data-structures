@@ -55,14 +55,23 @@ class ArrayStack(AbstractStack):
             raise LookupError("Cannot pop from empty stack")
         
         # Top item is last item in array implementation
-        out = self.items.pop(len(self) - 1)
+        out = self.items[self.items.size() - 1]
+        self.items[self.items.size() - 1] = self.items.fill_value
+
+        # Decrement logical size of underlying array and shrink if necessary
+        self.items.logical_size -= 1
+        self.items.shrink()
+
+        # Decrement self's size and return
         self.length -= 1
         return out
         
 
     def push(self, item):
         """Put item on top of stack."""
-        self.items.insert(len(self), item)
+        # Grow underlying array if necessary
+        self.items.grow()
+        self.items[self.items.size()] = item
         self.length += 1
 
         

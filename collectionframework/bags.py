@@ -58,7 +58,9 @@ class ArrayBag(AbstractBag):
         Add item to self, increase capacity of underlying array if necessary.
         Increment length.
         """
-        self.items.insert(len(self), item)
+        # Grow underlying array if necessary
+        self.items.grow()
+        self.items[self.items.size()] = item
         self.length += 1
 
     def remove(self, item):
@@ -73,7 +75,16 @@ class ArrayBag(AbstractBag):
             raise ValueError("ArrayBag.remove(x): x not in ArrayBag")
         
         # Remove target item
-        self.items.pop(self.position)
+        i = self.position + 1
+        while i < self.items.size():
+            self.items[i - 1] = self.items[i]
+            i += 1
+        # i is now self.items.size()
+        self.items[i - 1] = self.items.fill_value
+
+        # Decrement logical_size and shrink if necessary
+        self.items.logical_size -= 1
+        self.items.shrink()
 
         # Decrement length
         self.length -= 1
@@ -159,16 +170,24 @@ class ArraySortedBag(ArrayBag):
             else:
                 break
 
+        # Grow underlying array if necessary
+        self.items.grow()
+
         # Insert in correct position
         if self.is_empty():
-            self.items.insert(0, item)
+            insert_index = 0
+        # Item larger than mid value must be inserted in front
         elif item > self.items[mid]:
-            self.items.insert(mid + 1, item)
+            insert_index = mid + 1
         else:
-            self.items.insert(mid, item)
-            
-        self.length += 1
+            insert_index = mid
 
+        i = self.items.size()
+        while i != insert_index:
+            self.items[i] = self.items[i - 1]
+            i -= 1
+        self.items[insert_index] = item
+        self.length += 1
 
 class LinkedBag(AbstractBag):
     """Implement bag ADT using a linked list."""
