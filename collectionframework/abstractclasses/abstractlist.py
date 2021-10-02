@@ -46,14 +46,14 @@ class AbstractList(AbstractCollection):
 
     # Mutators
     def add(self, item):
-        """Append item to self."""
+        """Append item to self, increment length."""
         self.append(item)
 
     def append(self, item):
-        """Place item at end of self."""
+        """Place item at end of self, increment length."""
         self.insert(len(self), item)
         
     def prepend(self, item):
-        """Insert item at index 0."""
+        """Insert item at index 0, increment length."""
         self.insert(0, item)
     

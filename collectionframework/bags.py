@@ -54,13 +54,16 @@ class ArrayBag(AbstractBag):
         self.items = Array(ArrayBag.default_capacity)
 
     def add(self, item):
-        """Add item to self, increase capacity of underlying array if necessary."""
+        """
+        Add item to self, increase capacity of underlying array if necessary.
+        Increment length.
+        """
         self.items.insert(len(self), item)
         self.length += 1
 
     def remove(self, item):
         """
-        Remove item from self.
+        Remove item from self, decrement length.
         Precondition: Item is in self.
         Raises: ValueError if item is not in self.
         Postcondition: Item is not in self.
@@ -208,13 +211,13 @@ class LinkedBag(AbstractBag):
         self.items = DoublyLinkedList()
 
     def add(self, item):
-        """Add item to self."""
+        """Add item to self, increment length."""
         self.items.insert(len(self), item)
         self.length += 1
 
     def remove(self, item):
         """
-        Remove item from self.
+        Remove item from self, decrement length.
         Precondition: Item is in self.
         Raises: ValueError if item is not in self.
         Postcondition: Item is not in self.

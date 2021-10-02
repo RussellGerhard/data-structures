@@ -74,15 +74,15 @@ class ListInterface:
 
     # Mutators
     def add(self, item):
-        """Append an item to the end of self."""
+        """Append an item to the end of self, increment length."""
         pass
     
     def append(self, item):
-        """Place item at send of self."""
+        """Place item at send of self, increment length."""
         pass
 
     def clear(self):
-        """Clear self."""
+        """Remove all items from self, set length to 0."""
         pass
 
     def extend(self, iterable):
@@ -97,12 +97,12 @@ class ListInterface:
         pass
 
     def prepend(self, item):
-        """Insert item at index 0."""
+        """Insert item at index 0, increment length."""
         pass
 
     def pop(self, index = 0):
         """
-        Remove and return item at index.
+        Remove and return item at index, decrement length.
         Precondition: self is not empty, index in range(0, len(self)).
         Raises: IndexError
         Postcondition: item at index is not in self.
@@ -111,7 +111,7 @@ class ListInterface:
 
     def remove(self, item):
         """
-        Remove first occurence of item in self.
+        Remove first occurence of item in self, decrement length.
         Precondition: item must be in self.
         Raises: KeyError
         """

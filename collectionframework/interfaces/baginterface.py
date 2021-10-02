@@ -54,16 +54,16 @@ class BagInterface:
 
     # Mutator Methods
     def clear(self):
-        """Remove all items from self."""
+        """Remove all items from self, set length to 0."""
         pass
 
     def add(self, item):
-        """Add item to self."""
+        """Add item to self, increment length."""
         pass
 
     def remove(self, item):
         """
-        Remove item from self.
+        Remove item from self, decrement length.
         Precondition: Item is in self.
         Raises: ValueError if item is not in self.
         Postcondition: Item is not in self.

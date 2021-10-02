@@ -22,13 +22,15 @@ class ArrayStack(AbstractStack):
     """Implement stack ADT using an array."""
     default_capacity = 10
 
+    # Constructor
     def __init__(self, source_collection = None):
         """Initialize self, optionally pushing items from source_collection."""
         self.items = Array(ArrayStack.default_capacity)
         AbstractStack.__init__(self, source_collection)
 
+    # Accessors
     def __iter__(self): 
-        """Support iteration over every item in self."""
+        """Support iteration over every item in self from bottom to top."""
         i = 0
         while i < len(self):
             yield self.items[i]
@@ -67,13 +69,15 @@ class ArrayStack(AbstractStack):
 class DoublyLinkedStack(AbstractStack):
     """Implement stack ADT using a doubly linked list."""
 
+    # Constructor
     def __init__(self, source_collection = None):
         """Initialize self, optionally pushing items from source_collection."""
         self.items = DoublyLinkedList()
         AbstractStack.__init__(self, source_collection)
 
+    # Accessors
     def __iter__(self): 
-        """Support iteration over every item in self."""
+        """Support iteration over every item in self from bottom to top."""
         probe = self.items.head
         while probe != None:
             yield probe.data
@@ -82,8 +86,7 @@ class DoublyLinkedStack(AbstractStack):
     def peek(self):
         """Return top item on self without popping it."""
         if self.is_empty():
-            raise LookupError("Cannot peek at empty stack")
-        
+            raise LookupError("Cannot peek at empty stack.")
         return self.items.tail.data
 
     # Mutators

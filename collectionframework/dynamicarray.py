@@ -18,6 +18,8 @@ class Array:
         Initialize array and fill each position with fill_value.
         deepcopy fill_value in case its mutable.
         """
+        if capacity <= 0:
+            raise ValueError("Array must have capacity of 1 or more.")
         self.items = []
         self.logical_size = 0
         self.capacity = capacity
@@ -79,11 +81,12 @@ class Array:
         if self.size() == len(self):
             # Double physical size
             temp = Array(len(self)*2)
-            self.capacity = len(self)*2
 
             # Copy over items
             for i in range(self.size()):
                 temp.items[i] = self.items[i]
+                
+            self.capacity = len(self)*2
             self.items = temp.items
 
     def insert(self, index, item):

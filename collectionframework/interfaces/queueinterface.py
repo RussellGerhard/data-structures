@@ -1,33 +1,32 @@
 """
 Author:  Russell Gerhard
-Purpose: Document the interface for the stack ADT.
+Purpose: Document the interface of the queue ADT.
 """
 
-class StackInterface:
+class QueueInterface:
     """
-    Specify the interface to which any class implementing the stack ADT
-    must conform.
+    Specify the interface to which any class implementing the queue ADT must
+    conform.
     """
 
     # Constructor
     def __init__(self, source_collection = None):
         """
-        Initialize self, optionally pushing each element
-        of source_collection onto self.
+        Initialize self, optionally adding each element of source_collection
+        to self.
         """
         pass
 
     # Accessors
     def __add__(self, other):
         """
-        Drop other onto self, so that the bottom of other is on top of self.
-        Precondition: other must be of type self.
-        Raises: TypeError
+        Iterate through other, adding all items to a copy of self and return
+        this copy.
         """
         return None
-        
+
     def __contains__(self, item):
-        """Return True if item in self, else return False."""
+        """Return true if item in self, else return False."""
         return True
 
     def __eq__(self, other):
@@ -51,14 +50,14 @@ class StackInterface:
 
     def peek(self):
         """
-        Return item at top of self.
+        Return item at front of self.
         Precondition: self is not empty.
         Raises: LookupError
         """
         return 0
 
     def __repr__(self):
-        """Return the unique string representation of self."""
+        """Return unique string representation of self."""
         return ''
 
     def __str__(self):
@@ -66,19 +65,18 @@ class StackInterface:
         return ''
 
     # Mutators
+    def add(self, item):
+        """Add item to rear of self, increment length."""
+        pass
+    
     def clear(self):
         """Remove every item from self, set length to 0."""
         pass
 
     def pop(self):
         """
-        Remove and return item at top of self, decrement length.
+        Remove and return item at front of self, decrement length.
         Precondition: self is not empty.
-        Rasies: LookupError
+        Raises: LookupError
         """
-        pass
-
-    def push(self, item):
-        """Add item to the top of self, increment lenght."""
-        pass
-        
+        pass    

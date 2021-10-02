@@ -35,7 +35,7 @@ class ArrayList(AbstractList):
 
     # Mutators
     def clear(self):
-        """Clear self."""
+        """Remove all items from self, set length to 0."""
         self.items = Array()
         self.length = 0
 
@@ -45,7 +45,7 @@ class ArrayList(AbstractList):
             self.append(item)
 
     def insert(self, index, item):
-        """Insert item in self before index."""
+        """Insert item in self before index, increment length."""
         if index < 0:
             self.items.insert(0, item)
         else:
@@ -54,7 +54,7 @@ class ArrayList(AbstractList):
 
     def pop(self, index = 0):
         """
-        Remove and return item at index.
+        Remove and return item at index, decrement length.
         Precondition: self is not empty, index in range(0, len(self)).
         Raises: IndexError
         """
@@ -68,7 +68,7 @@ class ArrayList(AbstractList):
 
     def remove(self, item):
         """
-        Remove first occurence of item in self.
+        Remove first occurence of item in self, decrement length.
         Precondition: item must be in self.
         Raises: KeyError
         """
@@ -166,7 +166,7 @@ class LinkedList(AbstractList):
 
     # Mutators
     def clear(self):
-        """Clear self."""
+        """Remove all items from self, set length to 0."""
         self.head = None
         self.length = 0
 
@@ -178,7 +178,7 @@ class LinkedList(AbstractList):
         self.reverse()
 
     def insert(self, index, item):
-        """Insert item in self before index."""
+        """Insert item in self before index, increment length."""
         # Insert at head or self is empty
         if index <= 0 or self.is_empty():
             self.head = Node(item, self.head)
@@ -194,7 +194,7 @@ class LinkedList(AbstractList):
 
     def pop(self, index = 0):
         """
-        Remove and return item at index.
+        Remove and return item at index, decrement length.
         Precondition: self is not empty, index in range(0, len(self)).
         Raises: IndexError
         """
@@ -224,7 +224,7 @@ class LinkedList(AbstractList):
             
     def remove(self, item):
         """
-        Remove first occurence of item in self.
+        Remove first occurence of item in self, decrement lenght.
         Precondition: item must be in self.
         Raises: KeyError
         """
@@ -352,7 +352,7 @@ class DoublyLinkedList(AbstractList):
 
     # Mutators
     def clear(self):
-        """Clear self."""
+        """Remove all items from self, set length to 0."""
         self.head = None
         self.tail = None
         self.length = 0
@@ -363,7 +363,7 @@ class DoublyLinkedList(AbstractList):
             self.append(item)
 
     def insert(self, index, item):
-        """Insert item in self before index."""
+        """Insert item in self before index, increment length."""
         # Insert at head or self is empty
         if self.is_empty():
             self.head = TwoWayNode(item, None, None)
@@ -393,7 +393,7 @@ class DoublyLinkedList(AbstractList):
 
     def pop(self, index = 0):
         """
-        Remove and return item at index.
+        Remove and return item at index, decrement length.
         Precondition: self is not empty, index in range(0, len(self)).
         Raises: IndexError
         """
@@ -432,7 +432,7 @@ class DoublyLinkedList(AbstractList):
 
     def remove(self, item):
         """
-        Remove first occurence of item in self.
+        Remove first occurence of item in self, decrement length.
         Precondition: item must be in self.
         Raises: KeyError
         """

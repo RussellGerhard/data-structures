@@ -23,6 +23,8 @@ class AbstractStack(AbstractCollection):
 
     # Mutators
     def add(self, item):
-        """Same as push, used to satisfy interface requirements."""
+        """
+        Same as push, used to satisfy interface requirements, increment length.
+        """
         self.push(item)
         

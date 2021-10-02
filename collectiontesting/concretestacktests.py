@@ -1,7 +1,7 @@
 """
 Author:  Russell Gerhard
 Purpose: Create a unit testing framework for the methos implemented in all
-         concrete classes that implement the list ADT.
+         concrete classes that implement the stack ADT.
 
 Exports:
     TestConcreteStack: Test all methods provided by any concrete class
@@ -14,11 +14,11 @@ Exports:
                            DoublyLinkedStack implementation of the stack ADT.
 """
 
-from abstractstacktest import TestAbstractStack
 from stacks import ArrayStack, DoublyLinkedStack
+from abstractstacktest import TestAbstractStack
 import unittest
 
-def TestConcreteStack(TestAbstractStack):
+class TestConcreteStack(TestAbstractStack):
 
     # Constructor test
     def test_constructor(self):
@@ -46,11 +46,11 @@ def TestConcreteStack(TestAbstractStack):
     def test_clear(self):
         a = self.class_type([2,1,2,'a','b',3])
         a.clear()
-        self.assertTrue(self.is_empty())
+        self.assertTrue(a.is_empty())
 
     def test_pop(self):
         a = self.class_type([5,1,'a'])
-        self.assertTrue(a.pop() == a)
+        self.assertTrue(a.pop() == 'a')
         self.assertTrue(a.pop() == 1)
         self.assertTrue(a.pop() == 5)
         self.assertTrue(a.is_empty())
@@ -63,5 +63,13 @@ def TestConcreteStack(TestAbstractStack):
         a.push(1)
         a.push(24)
         a.push(['a'])
-        self.assertTrue(str(a) == "[a | 1 | 24 | 24 | [a]]")
+        self.assertTrue(str(a) == "[a | 1 | 24 | ['a']]")
+
+
+class TestArrayStack(TestConcreteStack, unittest.TestCase):
+    class_type = ArrayStack
+
+
+class TestDoublyLinkedStack(TestConcreteStack, unittest.TestCase):
+    class_type = DoublyLinkedStack
         
