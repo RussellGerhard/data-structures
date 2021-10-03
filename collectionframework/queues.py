@@ -20,6 +20,8 @@ class ArrayQueue(AbstractCollection):
         Initialize self, optionally adding each item in source_collection to
         self.
         """
+        # I should implement a CircularArray class with front and rear
+        # so that shrink actually works
         self.items = Array()
         self.front = 0
         self.rear = 0
@@ -60,10 +62,10 @@ class ArrayQueue(AbstractCollection):
             temp = Array(len(self)*2)
 
             for i, obj in enumerate(self):
-                temp.items[i] = obj
+                temp[i] = obj
             
             self.items.capacity = len(self)*2
-            self.items = temp.items
+            self.items = temp
 
             # Reset array pointers
             self.front = 0
