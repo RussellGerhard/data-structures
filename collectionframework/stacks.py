@@ -4,6 +4,7 @@ Purpose: Implement stack ADT using an array or doubly linked list.
 
 Exports:
     ArrayStack: Stack ADT implementation using array.
+    
     DoublyLinkedStack: Stack ADT implementation using a doubly linked list.*
 
 *Doubly linked list is prefered to singly because the interface specifies that

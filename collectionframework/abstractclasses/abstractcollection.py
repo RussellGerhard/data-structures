@@ -69,7 +69,7 @@ class AbstractCollection(object):
             return True
         
     def is_empty(self):
-        """Determine if self is empty, return True if it is, else False."""
+        """Return True if there are no items in self, else return False."""
         return (len(self) == 0)
 
     def __len__(self):

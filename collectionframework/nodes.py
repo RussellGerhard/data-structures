@@ -27,4 +27,12 @@ class TwoWayNode(Node):
     def __init__(self, data, _next = None, prev = None):
         Node.__init__(self, data, _next)
         self.prev = prev
+
+class BSTNode:
+    """Represent nodes in a binary search tree."""
+    def __init__(self, data, left = None, right = None):
+        """Instantiate a node."""
+        self.data = data
+        self.left = left
+        self.right = right
     

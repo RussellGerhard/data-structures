@@ -25,7 +25,7 @@ class TestConcreteList(TestAbstractList):
 
     # Constructor test
     def test_constructor(self):
-        a = self.class_type([])
+        a = self.class_type()
         self.assertTrue(str(a) == "[]")
         a = self.class_type([5,1,1,4,'a',7,4,"baba"])
         self.assertTrue(str(a) == "[5, 1, 1, 4, a, 7, 4, baba]")

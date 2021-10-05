@@ -4,5 +4,6 @@ Standalone c files, minimal as they are (I don't honestly know any C), can be fo
 
 The meat and potatoes of this repository is in the collectionframework directory, where I implement a host of different collection types. There are also interfaces and abstract classes, the former live in the interfaces directory; it contains commented specifications, or blueprints, for each concrete class. The abstractclasses directory contains abstract classes; these are used to factor common methods and data from concrete classes so that they may simply inherit from the relevant abstract class.
 
-Finally, there's the collectiontesting directory; it contains unit testing modules for each concrete class.
+Finally, there's the collectiontesting directory; it contains unit testing modules for each concrete class and a script to run them all at once.
 
+I chose not to abstract binary trees into their own class because the only two potential subclasses would be linked binary search trees and array heaps. I don't implement array binary search trees because BSTs have the potential to be unbalanced and thus arrays would waste a relatively vast amount of space. I don't implement linked heaps because heaps are always complete binary trees, and thus the array implementation is more efficient in terms of space, with the only downside coming from growing or shrinking the underlying array if necessary.

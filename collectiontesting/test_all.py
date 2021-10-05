@@ -9,6 +9,7 @@ import concretebagtests
 import concretesettests
 import concretestacktests
 import concretequeuetests
+import concreteBSTtests
 
 # Initialize test suite
 loader = unittest.TestLoader()
@@ -21,6 +22,7 @@ suite.addTests(loader.loadTestsFromModule(concretelisttests))
 suite.addTests(loader.loadTestsFromModule(concretesettests))
 suite.addTests(loader.loadTestsFromModule(concretestacktests))
 suite.addTests(loader.loadTestsFromModule(concretequeuetests))
+suite.addTests(loader.loadTestsFromModule(concreteBSTtests))
 
 # Initialize test runner, pass in suite and run
 runner = unittest.TextTestRunner(verbosity = 1)

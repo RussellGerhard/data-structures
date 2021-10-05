@@ -53,13 +53,13 @@ class SetInterface:
         return ''
 
     # Mutator Methods
-    def clear(self):
-        """Remove all items from self, set length to 0."""
-        pass
-
     # Only difference from bag
     def add(self, item):
         """If item not in self, add item and increment length."""
+        pass
+    
+    def clear(self):
+        """Remove all items from self, set length to 0."""
         pass
 
     def remove(self, item):

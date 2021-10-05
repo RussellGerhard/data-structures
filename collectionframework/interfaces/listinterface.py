@@ -60,6 +60,10 @@ class ListInterface:
         """Return True if self empty, else False."""
         return True
 
+    def __iter__(self):
+        """Support iteration of each element in self."""
+        return None
+
     def __len__(self):
         """Return length of self."""
         return 0

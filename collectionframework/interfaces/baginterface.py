@@ -53,12 +53,12 @@ class BagInterface:
         return ''
 
     # Mutator Methods
-    def clear(self):
-        """Remove all items from self, set length to 0."""
-        pass
-
     def add(self, item):
         """Add item to self, increment length."""
+        pass
+    
+    def clear(self):
+        """Remove all items from self, set length to 0."""
         pass
 
     def remove(self, item):
