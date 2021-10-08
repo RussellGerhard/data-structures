@@ -10,6 +10,7 @@ import concretesettests
 import concretestacktests
 import concretequeuetests
 import concreteBSTtests
+import concreteheaptests
 
 # Initialize test suite
 loader = unittest.TestLoader()
@@ -18,11 +19,12 @@ suite = unittest.TestSuite()
 # Add tests to test suite
 # Sets inherit from bags, so their tests run bag tests beforehand
 suite.addTests(loader.loadTestsFromModule(concretelisttests))
-#suite.addTests(loader.loadTestsFromModule(concretebagtests))
+suite.addTests(loader.loadTestsFromModule(concretebagtests))
 suite.addTests(loader.loadTestsFromModule(concretesettests))
 suite.addTests(loader.loadTestsFromModule(concretestacktests))
 suite.addTests(loader.loadTestsFromModule(concretequeuetests))
 suite.addTests(loader.loadTestsFromModule(concreteBSTtests))
+suite.addTests(loader.loadTestsFromModule(concreteheaptests))
 
 # Initialize test runner, pass in suite and run
 runner = unittest.TextTestRunner(verbosity = 1)

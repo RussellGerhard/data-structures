@@ -9,13 +9,9 @@ Exports:
                      
     TestLinkedBST: Test all methods in and inherited by the LinkedBST
                    implementation.
-        
-    TestArrayBST: Test all methods in and inherited by the ArrayBST.**
-
-** ArrayBST is not implemented so it is not tested in this module, but one could implement it and test it here.
 """
 
-from binarysearchtrees import LinkedBST  #, ArrayBST
+from binarysearchtrees import LinkedBST
 from abstractcollectiontest import TestAbstractCollection
 import unittest
 
@@ -25,6 +21,7 @@ class TestConcreteBST(TestAbstractCollection):
     def test_constructor(self):
         a = self.class_type()
         self.assertTrue(a.root is None)
+        self.assertTrue(repr(a) == "LinkedBST()")
         a = self.class_type([4,2,1,3,6,5,7])
         self.assertTrue(a.root.data == 4)
         self.assertTrue(a.root.left.data == 2)
@@ -101,17 +98,24 @@ class TestConcreteBST(TestAbstractCollection):
         self.assertTrue(out == "4213657")
 
     # Mutator tests
-    def add(self):
+    def test_add(self):
+        b = self.class_type()
+        with self.assertRaises(TypeError):
+            b.add({})
+        b.add(100)
+        with self.assertRaises(TypeError):
+            b.add('a')
+
         a = self.class_type()
         a.add(16)
         a.add(8)
         a.add(24)
-        self.add(4)
-        self.add(12)
-        self.add(20)
-        self.add(28)
-        self.add(16)
-        self.add(8)
+        a.add(4)
+        a.add(12)
+        a.add(20)
+        a.add(28)
+        a.add(16)
+        a.add(8)
         self.assertTrue(len(a) == 7)
         self.assertTrue(a.get_height() == 3)
         self.assertTrue(a.root.data == 16)
@@ -122,7 +126,7 @@ class TestConcreteBST(TestAbstractCollection):
         self.assertTrue(a.root.left.right.data == 12)
         self.assertTrue(a.root.left.left.data == 4)
         
-    def clear(self):
+    def test_clear(self):
         a = self.class_type([1,2,3,7,5,4])
         self.assertFalse(a.is_empty())
         self.assertFalse(a.root is None)
@@ -130,7 +134,7 @@ class TestConcreteBST(TestAbstractCollection):
         self.assertTrue(a.is_empty())
         self.assertTrue(a.root is None)
 
-    def remove(self):
+    def test_remove(self):
         # Remove from empty
         a = self.class_type()
         with self.assertRaises(LookupError):
@@ -170,10 +174,11 @@ class TestConcreteBST(TestAbstractCollection):
         self.assertTrue(len(a) == 5)
         self.assertTrue(a.root.left.data == 9)
         
-        # Remove node with 2 children (replace with max in left subtree of node, max has no children)
-        a = self.class_type([16,8,4,2,6,12,10,14,24,20,14,18,28,26,30])
+        # Remove node with 2 children
+        # (replace with max in left subtree of node, max has no children)
+        a = self.class_type([16,8,4,2,6,12,10,14,24,20,22,18,28,26,30])
         self.assertTrue(a.root.right.data == 24)
-        a = a.remove(24)
+        a.remove(24)
         self.assertTrue(a.root.right.data == 22)
         self.assertTrue(24 not in a)
         self.assertTrue(len(a) == 14)

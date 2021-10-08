@@ -1,28 +1,22 @@
 """
 Author:  Russell Gerhard
-Purpose: Implement a binary search tree (BST) using a linked structure and
-         a sequential, array-based structure.
+Purpose: Provide a class to implement the binary search tree ADT.
 
 Exports:
     LinkedBST: BST implemented with linked nodes.
-    
-    ArrayBST: BST implemented with an array.
 """
 
 from abstractclasses.abstractcollection import AbstractCollection
 from queues import DoublyLinkedQueue
 from stacks import DoublyLinkedStack
-from dynamicarray import Array
 from nodes import BSTNode
 
 class LinkedBST(AbstractCollection):
-    """Implement BST ADT according to BST interface using linked nodes."""
+    """Implement the BST ADT according to BST interface using linked nodes."""
 
     # Constructor
     def __init__(self, source_collection = None):
-        """
-        Initialize empty tree, optionally add items from source_collection.
-        """
+        """Initialize self, optionally add items from source_collection."""
         self.root = None
         AbstractCollection.__init__(self, source_collection)
 
@@ -179,7 +173,7 @@ class LinkedBST(AbstractCollection):
                 temp.append(node.data)
         recurse(self.root)
         return iter(temp)
-
+    
     def preorder(self):
         """Return an iterator that performed an preorder traversal of self."""
         temp = []
@@ -197,24 +191,45 @@ class LinkedBST(AbstractCollection):
     # Mutators
     def add(self, item):
         """Add item to self, increment length."""
+
+        # Check preconditions
+        try:
+            item < item
+        except TypeError:
+            raise TypeError("Cannot add non-comparable object to BST")
+
+        if not self.is_empty():
+            try:
+                item < self.root.data
+            except TypeError:
+                msg = "Cannot add item that doesn't support comparison "
+                msg += "with items currently in BST."
+                raise TypeError(msg)
+        
         # Helper recursion function
         def recurse(node):
             if item < node.data:
                 if node.left == None:
                     node.left = BSTNode(item)
                 else:
-                    recurse(node.left)
+                    return recurse(node.left)
             elif item > node.data:
                 if node.right == None:
                     node.right = BSTNode(item)
                 else:
-                    recurse(node.right)
+                    return recurse(node.right)
+            else:
+                return False
 
         if self.is_empty():
             self.root = BSTNode(item)
+            self.length += 1
         else:
-            recurse(self.root)
-        self.length += 1
+            insertion_made = recurse(self.root)
+            if insertion_made is None:
+                self.length += 1
+                
+            
 
     def clear(self):
         """Remove all items from self, set length to 0."""
@@ -248,20 +263,19 @@ class LinkedBST(AbstractCollection):
         if node.left and node.right:
             lmax_node = node.left
             lmax_parent = node
-            lmax_link = ''
             while lmax_node.right:
                 lmax_parent = lmax_node
                 lmax_node = lmax_node.right
             # Target node now has value of largest value in its left subtree
             node.data = lmax_node.data
 
-            # If max child was target node's left, then max has no left
-            # Therefore just make target node point to max node's left
-            if lmax_node.left and lmax_node == node.left:
+            # If max child was target node's left, then max child has no right
+            # Therefore just change target node's left child to be max node's left child
+            if lmax_node.left and lmax_node is node.left:
                 node.left = lmax_node.left
-            # Else max child has a left but is not target node's left.
+            # Elif max child has a left but max child is not target node's left.
             # Therefore make max node's parent's right point to max node's left. 
-            elif lmax_node.left and lmax_node != node.left:
+            elif lmax_node.left and lmax_node is not node.left:
                 lmax_parent.right = lmax_node.left
             # There is no left to take max node's place, so parent's right points to
             # None
@@ -282,8 +296,6 @@ class LinkedBST(AbstractCollection):
         # If target node only has right child, point parent's old connection toward
         # node's right child.
         elif node.right:
-            print(link)
-            print(node.data)
             if link == 'l':
                 parent.left = node.right
             elif link == 'r':
@@ -304,10 +316,3 @@ class LinkedBST(AbstractCollection):
 
         # Decrement length
         self.length -= 1
-                
-        
-        
-        
-    
-
-    
