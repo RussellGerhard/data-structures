@@ -11,6 +11,7 @@ import concretestacktests
 import concretequeuetests
 import concreteBSTtests
 import concreteheaptests
+import concretedicttest
 
 # Initialize test suite
 loader = unittest.TestLoader()
@@ -25,6 +26,7 @@ suite.addTests(loader.loadTestsFromModule(concretestacktests))
 suite.addTests(loader.loadTestsFromModule(concretequeuetests))
 suite.addTests(loader.loadTestsFromModule(concreteBSTtests))
 suite.addTests(loader.loadTestsFromModule(concreteheaptests))
+suite.addTests(loader.loadTestsFromModule(concretedicttest))
 
 # Initialize test runner, pass in suite and run
 runner = unittest.TextTestRunner(verbosity = 1)

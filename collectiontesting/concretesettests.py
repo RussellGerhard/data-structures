@@ -15,11 +15,12 @@ Exports:
                    implementation of the set ADT.
 """
 
+from abstractsettests import TestAbstractSet
 from concretebagtests import TestArrayBag, TestArraySortedBag, TestLinkedBag
 from sets import ArraySet, ArraySortedSet, LinkedSet
 import unittest
 
-class TestArraySet(TestArrayBag):
+class TestArraySet(TestAbstractSet, TestArrayBag):
     class_type = ArraySet
 
     # Constructor tests
@@ -58,7 +59,7 @@ class TestArraySet(TestArrayBag):
         self.assertTrue(str(a) == "{6}")
     
 
-class TestArraySortedSet(TestArraySortedBag):
+class TestArraySortedSet(TestAbstractSet, TestArraySortedBag):
     class_type = ArraySortedSet
 
     # Constructor tests
@@ -101,7 +102,7 @@ class TestArraySortedSet(TestArraySortedBag):
         self.assertTrue(str(a) == "{6}")
         
 
-class TestLinkedSet(TestLinkedBag):
+class TestLinkedSet(TestAbstractSet, TestLinkedBag):
     class_type = LinkedSet
 
     # Constructor tests

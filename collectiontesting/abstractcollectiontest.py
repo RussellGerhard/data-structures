@@ -40,7 +40,7 @@ class TestAbstractCollection():
         d = a + b
         self.assertTrue(c == d)
 
-    def test_containment(self):
+    def test_contains(self):
         # Item not in collection
         a = self.class_type()
         self.assertFalse(1 in a)

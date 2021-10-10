@@ -20,6 +20,14 @@ class SetInterface:
         """
         return None
 
+    def __and__(self, other):
+        """
+        Return the intersection of self and other.
+        Precondition: other must be of same type as self.
+        Raises: TypeError
+        """
+        return None
+
     def clone(self):
         """Return copy of self."""
         return None
@@ -36,6 +44,14 @@ class SetInterface:
         """Return True if len(self) == 0, else return False."""
         return True
 
+    def is_subset(self, other):
+        """
+        Return True if self is a subset of other.
+        Precondition: other must be of same type as self.
+        Raises: TypeError
+        """
+        return True
+
     def __iter__(self):
         """Support iteration over all items in self."""
         return None
@@ -44,6 +60,14 @@ class SetInterface:
         """Return the number of items in self."""
         return 0
 
+    def __or__(self, other):
+        """
+        Return the union of self and other.
+        Precondition: other must be of same type as self.
+        Raises: TypeError
+        """
+        return None
+
     def __repr__(self):
         """Return unique representation of self."""
         return ''
@@ -51,6 +75,14 @@ class SetInterface:
     def __str__(self):
         """Return the string representation of self."""
         return ''
+
+    def __sub__(self, other):
+        """
+        Return set difference self - other. Items in self that are not in other.
+        Precondition: other must be of same type as self.
+        Raises: TypeError
+        """
+        return None
 
     # Mutator Methods
     # Only difference from bag

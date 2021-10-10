@@ -40,15 +40,30 @@ class TestConcreteBST(TestAbstractCollection):
 
     def test_get_height(self):
         a = self.class_type()
-        self.assertTrue(a.get_height() == 0)
+        self.assertTrue(a.get_height(a.root) == 0)
         a.add(8)
-        self.assertTrue(a.get_height() == 1)
+        self.assertTrue(a.get_height(a.root) == 1)
         a.add(7)
-        self.assertTrue(a.get_height() == 2)
+        self.assertTrue(a.get_height(a.root) == 2)
         a.add(9)
-        self.assertTrue(a.get_height() == 2)
+        self.assertTrue(a.get_height(a.root) == 2)
         a.add(6)
-        self.assertTrue(a.get_height() == 3)
+        self.assertTrue(a.get_height(a.root) == 3)
+
+    def test_is_balanced(self):
+        a = self.class_type()
+        self.assertTrue(a.is_balanced(a.root))
+        a = self.class_type([2,4,5])
+        self.assertFalse(a.is_balanced(a.root))
+        a.add(1)
+        self.assertTrue(a.is_balanced(a.root))
+        a.add(4.5)
+        self.assertFalse(a.is_balanced(a.root))
+        a.add(0)
+        a.add(1.5)
+        self.assertFalse(a.is_balanced(a.root))
+        a.add(3)
+        self.assertTrue(a.is_balanced(a.root))
 
     def test_iteration(self):
         preorder_list = [4,2,1,3,6,5,7]
@@ -117,7 +132,7 @@ class TestConcreteBST(TestAbstractCollection):
         a.add(16)
         a.add(8)
         self.assertTrue(len(a) == 7)
-        self.assertTrue(a.get_height() == 3)
+        self.assertTrue(a.get_height(a.root) == 3)
         self.assertTrue(a.root.data == 16)
         self.assertTrue(a.root.left.data == 8)
         self.assertTrue(a.root.right.data == 24)

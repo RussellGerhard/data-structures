@@ -1,5 +1,3 @@
-from bags import ArrayBag, ArraySortedBag, LinkedBag
-
 """
 Author:  Russell Gerhard
 Purpose: Implement set ADT using an array or linked list, implement a sorted set
@@ -12,8 +10,11 @@ Exports:
     
     LinkedSet: Set ADT implementation using a linked list.
 """
+
+from bags import ArrayBag, ArraySortedBag, LinkedBag
+from abstractclasses.abstractset import AbstractSet
          
-class ArraySet(ArrayBag):
+class ArraySet(AbstractSet, ArrayBag):
     """Implement set ADT using an array, inheriting from ArrayBag."""
 
     # Mutators
@@ -25,7 +26,7 @@ class ArraySet(ArrayBag):
         if item not in self:
             ArrayBag.add(self, item)
 
-class ArraySortedSet(ArraySortedBag):
+class ArraySortedSet(AbstractSet, ArraySortedBag):
     """
     Implement sorted set ADT using an array, inheriting from ArraySortedBag.
     """
@@ -43,7 +44,7 @@ class ArraySortedSet(ArraySortedBag):
         if item not in self:
             ArraySortedBag.add(self, item)
 
-class LinkedSet(LinkedBag):
+class LinkedSet(AbstractSet, LinkedBag):
     """Implement set ADT using a linked list, inheriting from LinkedBag."""
 
     # Mutators

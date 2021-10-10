@@ -43,23 +43,28 @@ class LinkedBST(AbstractCollection):
 
         return recurse(self.root)
 
-    def get_height(self):
-        """Determine height of self."""
-        # Helper recursion function on nodes
-        def recurse(node):
-            if node.left is None and node.right is None:
-                return 1
-            elif node.left is None:
-                return 1 + recurse(node.right)
-            elif node.right is None:
-                return 1 + recurse(node.left)
-            else:
-                return 1 + max(recurse(node.left), recurse(node.right))
-
-        if self.is_empty():
+    def get_height(self, node):
+        """Determine height of subtree whose root is node."""
+        if node == None:
             return 0
+        elif node.left is None and node.right is None:
+            return 1
+        elif node.left is None:
+            return 1 + self.get_height(node.right)
+        elif node.right is None:
+            return 1 + self.get_height(node.left)
         else:
-            return recurse(self.root)
+            return 1 + max(self.get_height(node.left), self.get_height(node.right))
+
+    def is_balanced(self, node):
+        """Return True if subtree whose root is node is balanced, else return False."""
+        if node is None:
+            return True
+        else:
+            if abs(self.get_height(node.left) - self.get_height(node.right)) > 1:
+                return False
+            else:
+                return self.is_balanced(node.left) and self.is_balanced(node.right)
         
     def __iter__(self):
         """
@@ -80,7 +85,7 @@ class LinkedBST(AbstractCollection):
             return ''
         
         # Calculate height to determine width of tree display
-        height = self.get_height()
+        height = self.get_height(self.root)
         width = 2**(height + 1)
 
         # Set out string and initialize helpful traversal variables

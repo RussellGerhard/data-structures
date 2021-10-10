@@ -48,6 +48,21 @@ class BSTInterface:
         """Return item if in tree, else return None."""
         return None
 
+    def get_height(self, node):
+        """
+        Determine height of subtree whose root is node.
+        This should probably be internal with a user method that just
+        passes the root to the internal, but who has the time.
+        """
+        return 0
+
+    def is_balanced(self, node):
+        """
+        Return True if subtree whose root is node is balanced, else return False.
+        Same deal as get_height in terms of internal, passing nodes.
+        """
+        return True
+
     def is_empty(self):
         """Return True if there are no items in self, else return False."""
         return True
