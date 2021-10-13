@@ -96,10 +96,11 @@ class DictInterface:
         """
         return None
     
-    def __setitem__(self, key, value):
+    def __setitem__(self, key, new_value):
         """
         If key is in self, replace its value with the argument passed, else
-        create a new key in self and associated the value argument with it.
+        create a new key in self and associate the new_value argument with it.
+        If length equals capacity, grow array and rehash table.
         """
         pass
     

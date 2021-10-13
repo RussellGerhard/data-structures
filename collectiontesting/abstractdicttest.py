@@ -103,21 +103,42 @@ class TestAbstractDict(TestAbstractCollection):
 
     def test_repr(self):
         a = self.class_type()
-        self.assertTrue(repr(a) == f"{self.class_type.__name__}()")
+        self.assertTrue(repr(a) == f"{type(a).__name__}()")
+        
         a = self.class_type([1,2,3], [4,5,6])
-        repr_str = f"{self.class_type.__name__}(1: 4, 2: 5, 3: 6)"
-        self.assertTrue(repr(a) == repr_str)
+        repr_str = repr(a)
+        self.assertTrue(repr_str.startswith(f"{type(a).__name__}("))
+        self.assertTrue("1: 4" in repr_str)
+        self.assertTrue("2: 5" in repr_str)
+        self.assertTrue("3: 6" in repr_str)
+        self.assertTrue(repr_str.endswith(')'))
+        
         a = self.class_type(['a','b','c'], [1,2,3])
-        repr_str = f"{self.class_type.__name__}('a': 1, 'b': 2, 'c': 3)"
-        self.assertTrue(repr(a) == repr_str)
+        repr_str = repr(a)
+        self.assertTrue(repr_str.startswith(f"{type(a).__name__}("))
+        self.assertTrue("'a': 1" in repr_str)
+        self.assertTrue("'b': 2" in repr_str)
+        self.assertTrue("'c': 3" in repr_str)
+        self.assertTrue(repr_str.endswith(')'))
 
     def test_str(self):
         a = self.class_type()
         self.assertTrue(str(a) == "{}")
         a = self.class_type([1,2,3], [4,5,6])
-        self.assertTrue(str(a) == "{1: 4, 2: 5, 3: 6}")
+        str_str = str(a)
+        self.assertTrue(str_str.startswith('{'))
+        self.assertTrue("1: 4" in str_str)
+        self.assertTrue("2: 5" in str_str)
+        self.assertTrue("3: 6" in str_str)
+        self.assertTrue(str_str.endswith('}'))
+        
         a = self.class_type(['a','b','c'], [1,2,3])
-        self.assertTrue(str(a) == "{'a': 1, 'b': 2, 'c': 3}")
+        str_str = str(a)
+        self.assertTrue(str_str.startswith('{'))
+        self.assertTrue("'a': 1" in str_str)
+        self.assertTrue("'b': 2" in str_str)
+        self.assertTrue("'c': 3" in str_str)
+        self.assertTrue(str_str.endswith('}'))
 
     def test_values(self):
         a = self.class_type(['a', 'b', 1, 43], ['red', 'blue', 'green', 'pink'])

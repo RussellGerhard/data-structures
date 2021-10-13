@@ -14,7 +14,7 @@ Exports:
                   by the HashDict class.
 """
 
-from dicts import ArrayDict
+from dicts import ArrayDict, HashDict
 from abstractdicttest import TestAbstractDict
 import unittest
 
@@ -27,8 +27,11 @@ class TestConcreteDict(TestAbstractDict):
         with self.assertRaises(ValueError):
             a = self.class_type([1,2],['a'])
         a = self.class_type(['a', 'b', 'c'], [1,2,3])
-        self.assertTrue(str(a) == "{'a': 1, 'b': 2, 'c': 3}")
-
+        self.assertTrue(len(a) == 3)
+        self.assertTrue(a['a'] == 1)
+        self.assertTrue(a['b'] == 2)
+        self.assertTrue(a['c'] == 3)
+        
     # Accessor tests
     def test_getitem(self):
         a = self.class_type(['one', 'two', 'three'], [1,2,3])

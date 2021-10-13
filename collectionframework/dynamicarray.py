@@ -48,10 +48,10 @@ class Array:
     def __getitem__(self, index):
         """
         Return item at index in array.
-        Precondition: Index in range(0, self.size())
+        Precondition: Index in range(0, self.capacity)
         Raises: IndexError
         """
-        if index < 0 or index >= self.size():
+        if index < 0 or index >= len(self):
             raise IndexError("array index out of range")
         return self.items[index]
 
@@ -92,7 +92,7 @@ class Array:
     def __setitem__(self, index, value):
         """
         Set value at index in array.
-        Precondition: Index in range(0, self.size())
+        Precondition: Index in range(0, self.capacity)
         Raises: IndexError
         """
         if index < 0 or index >= len(self):

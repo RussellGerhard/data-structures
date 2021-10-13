@@ -15,9 +15,10 @@ class Entry:
     """Contain key-value pairs."""
 
     # Constructor
-    def __init__(self, key, value):
+    def __init__(self, key, value, probe_length = None):
         self.key = key
         self.value = value
+        self.probe_length = probe_length
 
     # Accessors
     def __repr__(self):
