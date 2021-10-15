@@ -7,13 +7,15 @@ Exports:
     ArrayList: List implementation based on an array.
 
     LinkedList: List implementation based on singly-linked nodes.
+
+    LinkedAdjacencyList: 
     
     DoublyLinkedList: Linked list with tail pointer whose nodes have pointers
                       to previous nodes.
 """
 
 from dynamicarray import Array
-from nodes import Node, TwoWayNode
+from nodes import Node, TwoWayNode, LinkedEdge
 from abstractclasses.abstractlist import AbstractList
 
 class ArrayList(AbstractList):
@@ -163,6 +165,9 @@ class LinkedList(AbstractList):
         """
         Instantiate and initialize self, optionally appending each item in
         source_collection to self.
+
+        Appending here to conform to interface, prepend would be better.
+        For efficient construction, use DoublyLinkedList or change this class!
         """
         self.head = None
         AbstractList.__init__(self, source_collection)
@@ -316,6 +321,60 @@ class LinkedList(AbstractList):
             self[i] = copy_buffer[cb_ind]
             cb_ind += 1
 
+
+class LinkedAdjacencyList(LinkedList):
+
+    # Accessors
+    def iter_node(self):
+        """
+        Support iteration over node objects rather than just their stored data.
+        """
+        probe = self.head
+        while probe != None:
+            yield probe
+            probe = probe.next
+    
+    def __repr__(self):
+        """Return unique string representation of self."""
+        out = "LinkedAdjacencyList("
+        out += str(self)[1:-1]
+        out += ')'
+        return out
+
+    def __str__(self):
+        """Return string representation of self."""
+        probe = self.head
+        out = '['
+        while probe != None:
+            out += f"({probe.data}, {probe.weight}), "
+            probe = probe.next
+        # Chop ending comma
+        if not self.is_empty():
+            out = out[:-2]
+        out += ']'
+        return out
+
+    # Mutators
+    def add(self, vertex, weight = 1):
+        """Prepend item to self."""
+        self.insert(0, vertex, weight)
+
+    def insert(self, index, vertex, weight = 1):
+        """Insert item in self before index, increment length."""
+        # Insert at head or self is empty
+        if index <= 0 or self.is_empty():
+            self.head = LinkedEdge(vertex, weight, self.head)
+        # Insert elsewhere in self
+        else:
+            probe = self.head
+            while index > 1 and probe.next is not None:
+                probe = probe.next
+                index -= 1
+            probe.next = LinkedEdge(vertex, weight, probe.next)
+
+        # Increment length
+        self.length += 1
+    
 
 class DoublyLinkedList(AbstractList):
     """Represent a doubly-linked list."""

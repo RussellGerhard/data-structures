@@ -12,7 +12,7 @@ class DictInterface:
         Instantiate self and initialize with keys and values from constructor
         arguments, if present.
         Precondition: keys and values must be iterables with same length
-        Raises: ValueErrors
+        Raises: ValueError
         """
         pass
 
