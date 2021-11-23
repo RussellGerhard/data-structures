@@ -1,7 +1,10 @@
 """
+
+CHANGED IN VSCODE
+
 Author:  Russell Gerhard
 Purpose: Implement bag ADT using an array or linked list, implement a sorted bag
-         using an array and inheriting from the array-implemented bag.
+         using an array and inheriting from the array-implemented bag. Modified.
 
 Exports:
     ArrayBag: Bag ADT implementation using an array.
